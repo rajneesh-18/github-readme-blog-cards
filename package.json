@@ -1,0 +1,10 @@
+{
+  "scripts": {
+  "prepare": "husky"
+},
+  "devDependencies": {
+    "@prettier/plugin-php": "^0.24.0",
+    "husky": "^9.1.7",
+    "prettier": "^3.6.2"
+  }
+}

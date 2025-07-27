@@ -1,0 +1,18 @@
+{
+  "name": "ritika-agrawal811/github-readme-blog-cards",
+  "description": "Generate embeddable blog preview cards for GitHub README",
+  "autoload": {
+    "classmap": [
+      "src/"
+    ]
+  },
+  "require": {},
+  "scripts": {
+    "start": [
+      "Composer\\Config::disableProcessTimeout",
+      "php -S localhost:8000 -t public"
+    ],
+    "lint": "npx prettier --check .",
+    "format": "npx prettier --write ."
+  }
+}
