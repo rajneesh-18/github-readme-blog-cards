@@ -1,4 +1,9 @@
 #!/bin/sh
 
 cd "$(git rev-parse --show-toplevel)"
-composer format
+
+# Run PHP syntax check
+composer php-lint || exit 1
+
+# Run Prettier formatting
+composer format || exit 1

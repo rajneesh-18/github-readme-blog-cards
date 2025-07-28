@@ -12,7 +12,7 @@
       "Composer\\Config::disableProcessTimeout",
       "php -S localhost:8000 -t public"
     ],
-    "lint": "npx prettier --check .",
+    "php-lint": "find . -type f -name '*.php' ! -path './vendor/*' -exec php -l {} \\;",
     "format": "npx prettier --write ."
   }
 }
