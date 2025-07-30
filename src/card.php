@@ -189,6 +189,10 @@ class Card
     private function renderImage($meta): string
     {
         $image = htmlspecialchars($meta['image'] ?? '');
+        $encodedImage = $this->fetchAndEncodeImage($image);
+        if (!$encodedImage) {
+            return '';
+        }
 
         $imageWidth = $this->cardWidth - $this->padding * 2;
         $imageHeight = $this->cardHeight / 2;
@@ -205,7 +209,7 @@ class Card
                 y='{$this->padding}' 
                 width='{$imageWidth}' 
                 height='{$imageHeight}' 
-                href='{$image}' 
+                href='{$encodedImage}' 
                 preserveAspectRatio='xMidYMid slice'
                 clip-path='url(#rounded-image-clip)'
             />
@@ -270,6 +274,10 @@ class Card
     {
         $siteName = htmlspecialchars($meta['site_name'] ?? '');
         $favicon = htmlspecialchars($meta['favicon'] ?? '');
+        $encodedImage = $this->fetchAndEncodeImage($favicon);
+        if (!$encodedImage) {
+            return '';
+        }
 
         $fontSize = $this->tagFontSize;
         $padding = 7; // inner padding for the tag box
@@ -311,7 +319,7 @@ class Card
                 y='{$faviconY}' 
                 width='{$faviconSize}' 
                 height='{$faviconSize}' 
-                href='{$favicon}' 
+                href='{$encodedImage}' 
                 preserveAspectRatio='xMidYMid slice'
                 />
                 <text 
@@ -396,5 +404,25 @@ class Card
             'svg' => $svgText,
             'lineCount' => count($lines),
         ];
+    }
+
+    /*
+       converts the image URL to base64
+    */
+    private function fetchAndEncodeImage($url)
+    {
+        $imageData = @file_get_contents($url);
+        if ($imageData === false) {
+            return null;
+        }
+
+        // using mime_content_type to get accurate MIME type
+        $mimeType = @mime_content_type($url);
+        if ($mimeType === false) {
+            $mimeType = 'image/png';
+        }
+
+        $base64 = base64_encode($imageData);
+        return "data:{$mimeType};base64,{$base64}";
     }
 }
