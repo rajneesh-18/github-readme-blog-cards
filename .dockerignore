@@ -2,3 +2,5 @@
 node_modules
 vendor
 README.md
+.DS_Store
+*.log
