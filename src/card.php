@@ -1,35 +1,38 @@
 <?php
 
+require_once __DIR__ . '/text.php';
+
 class Card
 {
-    /*
-      necessary styling variables for the blog card :-
-        - blogURL : the url of the blog
-        - cardWidth : the width of the blog card
-        - cardHeight : the height of the blog card
-        - padding : the padding around the card (esp the blog image)
-        - lineHeight : the line height value for the title and description
-    */
+    /**
+     * necessary styling variables for the blog card :-
+     * blogURL: url of the blog
+     * cardWidth: width of the blog card
+     * cardHeight: height of the blog card
+     * padding: padding around the card
+     * lineHeight: line height value for title and description
+     */
     private string $blogURL;
-    private int $cardWidth = 285;
-    private int $cardHeight = 320;
+    private int $cardWidth = 265;
+    private int $cardHeight = 315;
     private int $padding = 10;
     private int $titleFontSize = 14;
     private int $desciptionFontSize = 12;
-    private int $tagFontSize = 13;
+    private int $tagFontSize = 12;
+    private int $faviconSize = 16;
     private int $lineHeight = 20;
 
-    /*
-      receiving the blogURL from the params
-    */
+    /**
+     * @param string blog URL
+     */
     public function __construct(string $blogURL)
     {
         $this->blogURL = $blogURL;
     }
 
-    /*
-      the main function responsible for returning the card SVG
-    */
+    /**
+     * @return string the final blog card SVG
+     */
     public function render(): string
     {
         $escapedURL = htmlspecialchars($this->blogURL);
@@ -45,44 +48,63 @@ class Card
         }
     }
 
-    /*
-      generates the SVG for the card
-    */
+    /**
+     * generates the SVG for the card
+     *
+     * @param array<string,string> the metadata for the blog
+     * @return string the SVG for card
+     */
     private function generateSVG($meta): string
     {
+        // blog image
         $imageSVG = $this->renderImage($meta);
-        $titleData = $this->renderTitle($meta);
 
+        // blog title
+        $titleData = $this->renderTitle($meta);
         $titleSVG = $titleData['svg'];
         $titleLines = $titleData['lineCount'];
 
+        // blog description
         $descriptionSVG = $this->renderDescription($meta, $titleLines);
 
+        // blog website tag
         $blogWebsiteTag = $this->renderBlogWebsiteTag($meta);
 
-        return "<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' style='isolation: isolate' viewBox='0 0 {$this->cardWidth} {$this->cardHeight}' width='{$this->cardWidth}px' height='{$this->cardHeight}px'>
+        // card theme
+        $theme = $this->getTheme();
+
+        return "<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' style='isolation: isolate; margin: 15px;' viewBox='0 0 {$this->cardWidth} {$this->cardHeight}' width='{$this->cardWidth}px' height='{$this->cardHeight}px'>
             <style>
+
                 .title {
                     font: bold {$this->titleFontSize}px sans-serif;
-                    fill: #333;
+                    fill: {$theme['title']};
                 }
 
-                .desc {
+                .description {
                     font: {$this->desciptionFontSize}px sans-serif;
-                    fill: #555;
+                    fill: {$theme['description']};
                 }
 
                 .card-bg {
-                    fill: #fefefe;
-                    stroke: rgba(0,0,0,0.2);
+                    fill: {$theme['background']};
+                    stroke: {$theme['stroke']};
                     stroke-width: 2;
                     rx: 10;
                     ry: 10;
                 }
 
                 .tag {
+                  fill: {$theme['tagBackground']};
+                  rx: 6; 
+                  ry: 6; 
+                }
+
+                .tagTitle {
                     font: bold {$this->tagFontSize}px sans-serif;
-                    fill: #333;
+                    fill: {$theme['tagTitle']};
+                }
+
             </style>
 
             <!-- Card background -->
@@ -103,9 +125,13 @@ class Card
         </svg>";
     }
 
-    /*
-      fetches the HTML content for the blog URL and enforces the encoding to UTF-8
-    */
+    /**
+     * Fetch the HTML content for the blog URL and enforce the encoding to UTF-8
+     *
+     * @param string blog URL
+     * @return string HTML content of blog page
+     */
+
     private function fetchHTML($url): ?string
     {
         $context = stream_context_create([
@@ -114,18 +140,19 @@ class Card
             ],
         ]);
         $html = @file_get_contents($url, false, $context);
-        if ($html !== false) {
+        if ($html) {
             $html = html_entity_decode($html, ENT_QUOTES | ENT_HTML5, 'UTF-8');
         }
 
         return $html ?: null;
     }
 
-    /*
-       extracts the necessary metadata - image, title and description from the HTML content fetched previously
-       - again sets an encoding enforcement as a safe guard
-
-    */
+    /**
+     * extracts the necessary metadata - image, title and description from the HTML content fetched previously
+     *
+     * @param string HTML content of blog page
+     * @return array<string,string> blog metadata mapping
+     */
     private function extractMetadata($html): array
     {
         // Force UTF-8 for encoding
@@ -182,13 +209,14 @@ class Card
         ];
     }
 
-    /* 
-       returns the SVG for the blog image
-       - height and width of image are calculated from the dimensions of the card 
-    */
+    /**
+     * Generate SVG for the blog image
+     *
+     * @param array<string,string> blog metadata
+     */
     private function renderImage($meta): string
     {
-        $image = htmlspecialchars($meta['image'] ?? '');
+        $image = $meta['image'] ?? '';
         $encodedImage = $this->fetchAndEncodeImage($image);
         if (!$encodedImage) {
             return '';
@@ -216,17 +244,20 @@ class Card
         ";
     }
 
-    /* 
-       returns the SVG and number of rendered lines for the blog title
-       - title position is calculated based on the line height, padding and image dimensions
-    */
+    /**
+     * Generate SVG for blog title
+     *
+     * @param array<string,string> blog metadata
+     * @return array<string,string> title svg and lines count
+     */
     private function renderTitle($meta): array
     {
-        $title = htmlspecialchars($meta['title'] ?? 'No Title');
+        $title = $meta['title'] ?? 'No Title';
 
         $titleXPosition = $this->padding;
         $titleYPosition = $this->cardHeight / 2 + $this->lineHeight + $this->padding * 1.5;
-        $titleData = $this->renderText($title, 35, 10, 30, $this->lineHeight, 3);
+
+        $titleData = $this->renderText($title, $this->titleFontSize, 3, true);
         $titleSpans = $titleData['svg'];
         $titleLines = $titleData['lineCount'];
 
@@ -249,21 +280,21 @@ class Card
     */
     private function renderDescription($meta, $titleLines): string
     {
-        $description = htmlspecialchars($meta['description'] ?? 'No description available.');
+        $description = $meta['description'] ?? 'No description available.';
 
         $descriptionXPosition = $this->padding;
         $descriptionYPosition = $this->cardHeight / 2 + ($titleLines + 1) * $this->lineHeight + $this->padding * 2;
 
         // Limit description lines based on title lines
         $maxDescLines = max(4 - $titleLines, 1);
-        $descriptionData = $this->renderText($description, 45, 10, 30, $this->lineHeight, $maxDescLines);
+        $descriptionData = $this->renderText($description, $this->desciptionFontSize, $maxDescLines, false);
         $descriptionSpans = $descriptionData['svg'];
 
         return "
          <text 
             x='{$descriptionXPosition}' 
             y='{$descriptionYPosition}' 
-            class='desc'>{$descriptionSpans}</text> 
+            class='description'>{$descriptionSpans}</text> 
         ";
     }
 
@@ -273,15 +304,14 @@ class Card
     private function renderBlogWebsiteTag($meta): string
     {
         $siteName = htmlspecialchars($meta['site_name'] ?? '');
-        $favicon = htmlspecialchars($meta['favicon'] ?? '');
+        $favicon = $meta['favicon'] ?? '';
         $encodedImage = $this->fetchAndEncodeImage($favicon);
         if (!$encodedImage) {
             return '';
         }
 
         $fontSize = $this->tagFontSize;
-        $padding = 7; // inner padding for the tag box
-        $faviconSize = 18;
+        $padding = 8; // inner padding for the tag box
         $gap = 7; // space between favicon and text
 
         // Estimate text width
@@ -289,8 +319,8 @@ class Card
         $textWidth = strlen($siteName) * $avgCharWidth;
 
         // Total tag box width = favicon + gap + text + 2*padding
-        $boxWidth = $faviconSize + $gap + $textWidth + 2 * $padding;
-        $boxHeight = $faviconSize + 2 * $padding;
+        $boxWidth = $this->faviconSize + $gap + $textWidth + 2 * $padding;
+        $boxHeight = $this->faviconSize + 2 * $padding;
 
         // Box position: bottom right
         $boxX = $this->cardWidth - $this->padding - $boxWidth;
@@ -300,104 +330,56 @@ class Card
         $faviconX = $boxX + $padding;
         $faviconY = $boxY + $padding;
 
-        $textX = $faviconX + $faviconSize + $gap;
+        $textX = $faviconX + $this->faviconSize + $gap;
         $textY = $faviconY + $fontSize * 1.05;
 
         return "
             <g>
                 <rect 
-                x='{$boxX}' 
-                y='{$boxY}' 
-                width='{$boxWidth}' 
-                height='{$boxHeight}' 
-                rx='8' 
-                ry='8' 
-                fill='rgba(0,0,0,0.05)' 
+                    x='{$boxX}' 
+                    y='{$boxY}' 
+                    width='{$boxWidth}' 
+                    height='{$boxHeight}' 
+                    class='tag' 
                 />
                 <image 
-                x='{$faviconX}' 
-                y='{$faviconY}' 
-                width='{$faviconSize}' 
-                height='{$faviconSize}' 
-                href='{$encodedImage}' 
-                preserveAspectRatio='xMidYMid slice'
+                    x='{$faviconX}' 
+                    y='{$faviconY}' 
+                    width='{$this->faviconSize}' 
+                    height='{$this->faviconSize}' 
+                    href='{$encodedImage}' 
+                    preserveAspectRatio='xMidYMid slice'
                 />
                 <text 
-                x='{$textX}' 
-                y='{$textY}' 
-                class='tag' 
+                    x='{$textX}' 
+                    y='{$textY}' 
+                    class='tagTitle'
                 >
-                {$siteName}
+                 {$siteName}
                 </text>
             </g>
         ";
     }
 
-    /*
-      this functions returns the tspan tags and number of lines for a piece of text. It renders a text into multiple lines
-      params are :-
-        - text : the text content
-        - maxChars : the maximum characters allowed in each line
-        - x : the x position for each line
-        - y : the y position for each line
-        - lineHeight : the line height for the content
-        - maxLines : maximum number of lines allowed for text to truncate it
-
-    */
-    private function renderText(string $text, int $maxChars, int $x, int $y, int $lineHeight, int $maxLines): array
+    /**
+     * Generate the tspans and number of lines for the wrapped text
+     *
+     * @param string text
+     * @param int font size
+     * @param int maximum number of lines
+     * @return array<string,string> SVG and lines count
+     */
+    private function renderText(string $text, int $fontSize, int $maxLines, bool $isBold): array
     {
-        $words = explode(' ', $text);
-        $lines = [];
-        $currentLine = '';
+        $textObj = new Text($this->cardWidth, $this->cardHeight, $this->padding, $fontSize, $this->lineHeight, $isBold);
+        $lines = $textObj->wrapTextByWidth($text, $maxLines);
 
-        foreach ($words as $word) {
-            $testLine = trim($currentLine . ' ' . $word);
-
-            // Check if adding this word would exceed character limit
-            if (strlen($testLine) > $maxChars) {
-                // If current line is empty, we need to force-fit the word
-                if (empty($currentLine)) {
-                    $lines[] = substr($word, 0, $maxChars - 3) . '...';
-                    break;
-                } else {
-                    // Add current line and start new one with current word
-                    $lines[] = $currentLine;
-                    $currentLine = $word;
-
-                    // Check if we've reached max lines
-                    if (count($lines) >= $maxLines) {
-                        break;
-                    }
-                }
-            } else {
-                $currentLine = $testLine;
-            }
-        }
-
-        // Handle the final line
-        if (!empty($currentLine) && count($lines) < $maxLines) {
-            $lines[] = $currentLine;
-        }
-
-        // If we have more content than allowed lines, truncate the last line and add ellipsis
-        if (count($lines) > $maxLines) {
-            $lines = array_slice($lines, 0, $maxLines);
-            $lastLine = $lines[$maxLines - 1];
-            $lines[$maxLines - 1] = substr($lastLine, 0, $maxChars - 3) . '...';
-        } elseif (count($lines) === $maxLines) {
-            // Check if there are remaining words that didn't fit
-            $allProcessedText = implode(' ', $lines);
-            if (strlen($text) > strlen($allProcessedText)) {
-                $lastLine = $lines[$maxLines - 1];
-                $lines[$maxLines - 1] = substr($lastLine, 0, $maxChars - 3) . '...';
-            }
-        }
-
-        // Generate SVG
+        // generate final SVG with tspans for each line
         $svgText = '';
         foreach ($lines as $index => $line) {
-            $dy = $index === 0 ? 0 : $lineHeight;
-            $svgText .= "<tspan x=\"$x\" dy=\"$dy\">$line</tspan>";
+            $dy = $index === 0 ? 0 : $this->lineHeight;
+            $formattedLine = htmlspecialchars($line);
+            $svgText .= "<tspan x=\"$this->padding\" dy=\"$dy\">$formattedLine</tspan>";
         }
 
         return [
@@ -406,17 +388,20 @@ class Card
         ];
     }
 
-    /*
-       converts the image URL to base64
-    */
-    private function fetchAndEncodeImage($url)
+    /**
+     * Convert the image URL to base64
+     *
+     * @param string image URL
+     * @return string base64 version of image
+     */
+    private function fetchAndEncodeImage($url): string
     {
         $imageData = @file_get_contents($url);
         if ($imageData === false) {
             return null;
         }
 
-        // using mime_content_type to get accurate MIME type
+        // fetch accurate MIME type
         $mimeType = @mime_content_type($url);
         if ($mimeType === false) {
             $mimeType = 'image/png';
@@ -424,5 +409,17 @@ class Card
 
         $base64 = base64_encode($imageData);
         return "data:{$mimeType};base64,{$base64}";
+    }
+
+    /**
+     * Get the theme mapping for the card
+     *
+     * @return array<string,string> theme mapping
+     */
+    private function getTheme(): array
+    {
+        $THEMES = include __DIR__ . '/themes.php';
+
+        return $THEMES['default'];
     }
 }
