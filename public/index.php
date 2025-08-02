@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../src/card.php';
+require_once __DIR__ . '/../src/Card.php';
 
 // Ignore favicon requests from browsers
 if ($_SERVER['REQUEST_URI'] === '/favicon.ico') {
@@ -12,6 +12,14 @@ if ($_SERVER['REQUEST_URI'] === '/favicon.ico') {
 // Set default blog URL if 'url' param is missing or empty
 $blogURL = isset($_GET['url']) && $_GET['url'] !== '' ? $_GET['url'] : null;
 
+// get layout param
+$layout = $_GET['layout'] ?? 'horizontal';
+$layout = match (strtolower($layout)) {
+    'h', 'horizontal' => 'horizontal',
+    'v', 'vertical' => 'vertical',
+    default => 'horizontal',
+};
+
 if (!$blogURL) {
     http_response_code(400);
     echo "Missing 'url' parameter";
@@ -20,5 +28,5 @@ if (!$blogURL) {
 
 // Generate and output SVG
 header('Content-Type: image/svg+xml');
-$card = new Card($blogURL);
+$card = new Card($blogURL, $layout);
 echo $card->render();
