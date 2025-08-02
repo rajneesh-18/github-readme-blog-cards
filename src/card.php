@@ -1,6 +1,7 @@
 <?php
 
-require_once __DIR__ . '/text.php';
+require_once __DIR__ . '/text/TextFormatter.php';
+require_once __DIR__ . '/theme/Theme.php';
 
 class Card
 {
@@ -12,22 +13,59 @@ class Card
      * padding: padding around the card
      * lineHeight: line height value for title and description
      */
+    private array $layoutData = [
+        'horizontal' => [
+            'width' => 385,
+            'height' => 110,
+            'padding' => 8,
+            'titleFontSize' => 13,
+            'desciptionFontSize' => 11,
+            'tagFontSize' => 11,
+            'faviconSize' => 15,
+            'lineHeight' => 18,
+        ],
+        'vertical' => [
+            'width' => 250,
+            'height' => 300,
+            'padding' => 8,
+            'titleFontSize' => 14,
+            'desciptionFontSize' => 12,
+            'tagFontSize' => 12,
+            'faviconSize' => 16,
+            'lineHeight' => 20,
+        ],
+    ];
+
+    private float $cardWidth;
+    private float $cardHeight;
+    private int $padding;
+    private int $titleFontSize;
+    private int $desciptionFontSize;
+    private int $tagFontSize;
+    private int $faviconSize;
+    private int $lineHeight;
+
+    // received via params
     private string $blogURL;
-    private int $cardWidth = 265;
-    private int $cardHeight = 315;
-    private int $padding = 10;
-    private int $titleFontSize = 14;
-    private int $desciptionFontSize = 12;
-    private int $tagFontSize = 12;
-    private int $faviconSize = 16;
-    private int $lineHeight = 20;
+    private string $layout;
 
     /**
      * @param string blog URL
      */
-    public function __construct(string $blogURL)
+    public function __construct(string $blogURL, string $layout)
     {
         $this->blogURL = $blogURL;
+        $this->layout = $layout;
+
+        $dimensions = $this->layoutData[$layout];
+        $this->cardWidth = $dimensions['width'];
+        $this->cardHeight = $dimensions['height'];
+        $this->padding = $dimensions['padding'];
+        $this->titleFontSize = $dimensions['titleFontSize'];
+        $this->desciptionFontSize = $dimensions['desciptionFontSize'];
+        $this->tagFontSize = $dimensions['tagFontSize'];
+        $this->faviconSize = $dimensions['faviconSize'];
+        $this->lineHeight = $dimensions['lineHeight'];
     }
 
     /**
@@ -39,6 +77,7 @@ class Card
 
         if ($escapedURL) {
             $html = $this->fetchHTML($escapedURL);
+
             if ($html) {
                 $meta = $this->extractMetadata($html);
                 return $this->generateSVG($meta);
@@ -49,7 +88,7 @@ class Card
     }
 
     /**
-     * generates the SVG for the card
+     * Get the SVG for the blog card
      *
      * @param array<string,string> the metadata for the blog
      * @return string the SVG for card
@@ -71,9 +110,10 @@ class Card
         $blogWebsiteTag = $this->renderBlogWebsiteTag($meta);
 
         // card theme
-        $theme = $this->getTheme();
+        $themeObj = new Theme();
+        $theme = $themeObj->getTheme();
 
-        return "<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' style='isolation: isolate; margin: 15px;' viewBox='0 0 {$this->cardWidth} {$this->cardHeight}' width='{$this->cardWidth}px' height='{$this->cardHeight}px'>
+        return "<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' style='isolation: isolate; margin: 15px 10px;' viewBox='0 0 {$this->cardWidth} {$this->cardHeight}' width='{$this->cardWidth}px' height='{$this->cardHeight}px'>
             <style>
 
                 .title {
@@ -109,11 +149,11 @@ class Card
 
             <!-- Card background -->
             <rect class='card-bg' x='0' y='0' width='{$this->cardWidth}' height='{$this->cardHeight}' rx='10' ry='10'/>
-           
+
             <!-- Blog image (full width, half height) -->
             {$imageSVG}
 
-            <!-- Title -->
+             <!-- Title -->
             {$titleSVG}
 
             <!-- Description -->
@@ -121,7 +161,6 @@ class Card
 
             <!-- Blog Site Icon and Name -->
             {$blogWebsiteTag}
-
         </svg>";
     }
 
@@ -131,7 +170,6 @@ class Card
      * @param string blog URL
      * @return string HTML content of blog page
      */
-
     private function fetchHTML($url): ?string
     {
         $context = stream_context_create([
@@ -222,21 +260,32 @@ class Card
             return '';
         }
 
-        $imageWidth = $this->cardWidth - $this->padding * 2;
-        $imageHeight = $this->cardHeight / 2;
+        $imageDimensions = [
+            'horizontal' => [
+                'width' => $this->cardWidth * 0.2,
+                'height' => $this->cardHeight - $this->padding * 2,
+            ],
+            'vertical' => [
+                'width' => $this->cardWidth - $this->padding * 2,
+                'height' => $this->cardHeight / 2,
+            ],
+        ];
+
+        $width = $imageDimensions[$this->layout]['width'];
+        $height = $imageDimensions[$this->layout]['height'];
 
         return "
             <defs>
                 <clipPath id='rounded-image-clip'>
-                    <rect x='{$this->padding}' y='{$this->padding}' width='{$imageWidth}' height='{$imageHeight}' rx='10' ry='10' />
+                    <rect x='{$this->padding}' y='{$this->padding}' width='{$width}' height='{$height}' rx='10' ry='10' />
                 </clipPath>
             </defs>
 
             <image 
                 x='{$this->padding}' 
                 y='{$this->padding}' 
-                width='{$imageWidth}' 
-                height='{$imageHeight}' 
+                width='{$width}' 
+                height='{$height}' 
                 href='{$encodedImage}' 
                 preserveAspectRatio='xMidYMid slice'
                 clip-path='url(#rounded-image-clip)'
@@ -254,10 +303,28 @@ class Card
     {
         $title = $meta['title'] ?? 'No Title';
 
-        $titleXPosition = $this->padding;
-        $titleYPosition = $this->cardHeight / 2 + $this->lineHeight + $this->padding * 1.5;
+        $titlePositions = [
+            'horizontal' => [
+                'x' => $this->cardWidth * 0.2 + $this->padding * 2,
+                'y' => $this->lineHeight * 1.25,
+                'width' => $this->cardWidth * 0.8 - $this->padding,
+                'lines' => 2,
+            ],
+            'vertical' => [
+                'x' => $this->padding,
+                'y' => $this->cardHeight / 2 + $this->lineHeight + $this->padding * 1.5,
+                'width' => $this->cardWidth,
+                'lines' => 3,
+            ],
+        ];
 
-        $titleData = $this->renderText($title, $this->titleFontSize, 3, true);
+        $width = $titlePositions[$this->layout]['width'];
+        $titleXPosition = $titlePositions[$this->layout]['x'];
+        $titleYPosition = $titlePositions[$this->layout]['y'];
+        $maxLines = $titlePositions[$this->layout]['lines'];
+
+        // break title into multiple lines
+        $titleData = $this->renderText($title, $this->titleFontSize, $maxLines, true, $width, $titleXPosition);
         $titleSpans = $titleData['svg'];
         $titleLines = $titleData['lineCount'];
 
@@ -274,20 +341,46 @@ class Card
         ];
     }
 
-    /* 
-       returns the SVG for the blog description
-       - description position is calculated based on the line height, padding, image dimensions and number of rendered lines for the blog title
-    */
+    /**
+     * Generate SVG for blog description
+     *
+     * @param array<string,string> blog metadata
+     * @param int number of lines for title
+     * @return string SVG for description
+     */
     private function renderDescription($meta, $titleLines): string
     {
         $description = $meta['description'] ?? 'No description available.';
 
-        $descriptionXPosition = $this->padding;
-        $descriptionYPosition = $this->cardHeight / 2 + ($titleLines + 1) * $this->lineHeight + $this->padding * 2;
+        $descriptionPositions = [
+            'horizontal' => [
+                'x' => $this->cardWidth * 0.2 + $this->padding * 2,
+                'y' => ($titleLines + 1) * $this->lineHeight + $this->padding,
+                'width' => $this->cardWidth * 0.8 - $this->padding,
+                'lines' => $titleLines == 1 ? 2 : 1,
+            ],
+            'vertical' => [
+                'x' => $this->padding,
+                'y' => $this->cardHeight / 2 + ($titleLines + 1) * $this->lineHeight + $this->padding * 2,
+                'width' => $this->cardWidth,
+                'lines' => max(4 - $titleLines, 1),
+            ],
+        ];
 
-        // Limit description lines based on title lines
-        $maxDescLines = max(4 - $titleLines, 1);
-        $descriptionData = $this->renderText($description, $this->desciptionFontSize, $maxDescLines, false);
+        $width = $descriptionPositions[$this->layout]['width'];
+        $descriptionXPosition = $descriptionPositions[$this->layout]['x'];
+        $descriptionYPosition = $descriptionPositions[$this->layout]['y'];
+        $maxLines = $descriptionPositions[$this->layout]['lines'];
+
+        // break description into multiple lines
+        $descriptionData = $this->renderText(
+            $description,
+            $this->desciptionFontSize,
+            $maxLines,
+            false,
+            $width,
+            $descriptionXPosition,
+        );
         $descriptionSpans = $descriptionData['svg'];
 
         return "
@@ -298,9 +391,12 @@ class Card
         ";
     }
 
-    /*
-      returns the SVG for the blog website name and favicon tag
-    */
+    /**
+     * Generate SVG for blog website tag
+     *
+     * @param array<string,string> blog metadata
+     * @return string SVG for tag
+     */
     private function renderBlogWebsiteTag($meta): string
     {
         $siteName = htmlspecialchars($meta['site_name'] ?? '');
@@ -311,8 +407,8 @@ class Card
         }
 
         $fontSize = $this->tagFontSize;
-        $padding = 8; // inner padding for the tag box
-        $gap = 7; // space between favicon and text
+        $padding = 6; // inner padding for the tag box
+        $gap = 5; // space between favicon and text
 
         // Estimate text width
         $avgCharWidth = 0.6 * $fontSize;
@@ -367,11 +463,13 @@ class Card
      * @param string text
      * @param int font size
      * @param int maximum number of lines
+     * @param float width
+     * @param float x position for each tspan tags
      * @return array<string,string> SVG and lines count
      */
-    private function renderText(string $text, int $fontSize, int $maxLines, bool $isBold): array
+    private function renderText(string $text, int $fontSize, int $maxLines, bool $isBold, float $width, float $x): array
     {
-        $textObj = new Text($this->cardWidth, $this->cardHeight, $this->padding, $fontSize, $this->lineHeight, $isBold);
+        $textObj = new TextFormatter($width, $this->cardHeight, $this->padding, $fontSize, $this->lineHeight, $isBold);
         $lines = $textObj->wrapTextByWidth($text, $maxLines);
 
         // generate final SVG with tspans for each line
@@ -379,7 +477,7 @@ class Card
         foreach ($lines as $index => $line) {
             $dy = $index === 0 ? 0 : $this->lineHeight;
             $formattedLine = htmlspecialchars($line);
-            $svgText .= "<tspan x=\"$this->padding\" dy=\"$dy\">$formattedLine</tspan>";
+            $svgText .= "<tspan x=\"$x\" dy=\"$dy\">$formattedLine</tspan>";
         }
 
         return [
@@ -409,17 +507,5 @@ class Card
 
         $base64 = base64_encode($imageData);
         return "data:{$mimeType};base64,{$base64}";
-    }
-
-    /**
-     * Get the theme mapping for the card
-     *
-     * @return array<string,string> theme mapping
-     */
-    private function getTheme(): array
-    {
-        $THEMES = include __DIR__ . '/themes.php';
-
-        return $THEMES['default'];
     }
 }

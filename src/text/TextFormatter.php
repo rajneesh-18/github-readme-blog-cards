@@ -1,6 +1,6 @@
 <?php
 
-class Text
+class TextFormatter
 {
     /**
      * necessary styling rendering the text :-
@@ -10,8 +10,8 @@ class Text
      * lineHeight: line height value for text
      * fontSize: font size for the text
      */
-    private int $cardHeight;
-    private int $cardWidth;
+    private float $cardHeight;
+    private float $cardWidth;
     private int $padding;
     private int $fontSize;
     private int $lineHeight;
@@ -26,8 +26,8 @@ class Text
      * @param int line height for text
      */
     public function __construct(
-        int $cardWidth,
-        int $cardHeight,
+        float $cardWidth,
+        float $cardHeight,
         int $padding,
         int $fontSize,
         int $lineHeight,
@@ -40,7 +40,7 @@ class Text
         $this->lineHeight = $lineHeight;
         $this->isBold = $isBold;
 
-        $this->CHAR_WIDTHS = include __DIR__ . '/charWidths.php';
+        $this->CHAR_WIDTHS = include __DIR__ . '/char_widths.php';
     }
 
     /**
