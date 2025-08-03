@@ -1,6 +1,20 @@
 {
   "name": "ritika-agrawal811/github-readme-blog-cards",
-  "description": "Generate embeddable blog preview cards for GitHub README",
+  "description": "Ditch plain links — showcase your blogs with clean, customizable cards in your GitHub README. 🔥",
+  "keywords": [
+    "github",
+    "readme",
+    "readme-cards",
+    "blog-cards",
+    "blog-preview",
+    "github-readme",
+    "dynamic-cards",
+    "developer-portfolio",
+    "blog-embed"
+  ],
+  "license": "MIT",
+  "version": "1.0.0",
+  "homepage": "https://github.com/Ritika-Agrawal811/github-readme-blog-cards",
   "autoload": {
     "classmap": [
       "src/"
