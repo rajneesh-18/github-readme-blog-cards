@@ -78,6 +78,6 @@ Give a ⭐ if you like this project, and share it with your friends!
 
 <p align='center'>• • •</p>
 
-##### Thanks so much! Happy Coding! ✨
+#### Thanks so much! Happy Coding! ✨
 
 Inspired by [Github Readme Streak Stats](https://github.com/DenverCoder1/github-readme-streak-stats) :fire:

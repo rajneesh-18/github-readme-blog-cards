@@ -12,6 +12,8 @@ class Card
      * cardHeight: height of the blog card
      * padding: padding around the card
      * lineHeight: line height value for title and description
+     * layout: horizontal or vertical layout
+     * theme : color theme for card
      */
     private array $layoutData = [
         'horizontal' => [
@@ -48,14 +50,16 @@ class Card
     // received via params
     private string $blogURL;
     private string $layout;
+    private string $theme;
 
     /**
      * @param string blog URL
      */
-    public function __construct(string $blogURL, string $layout)
+    public function __construct(string $blogURL, string $layout, string $theme)
     {
         $this->blogURL = $blogURL;
         $this->layout = $layout;
+        $this->theme = $theme;
 
         $dimensions = $this->layoutData[$layout];
         $this->cardWidth = $dimensions['width'];
@@ -110,7 +114,7 @@ class Card
         $blogWebsiteTag = $this->renderBlogWebsiteTag($meta);
 
         // card theme
-        $themeObj = new Theme();
+        $themeObj = new Theme($this->theme);
         $theme = $themeObj->getTheme();
 
         return "<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' style='isolation: isolate;' viewBox='0 0 {$this->cardWidth} {$this->cardHeight}' width='{$this->cardWidth}px' height='{$this->cardHeight}px'>

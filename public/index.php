@@ -12,21 +12,24 @@ if ($_SERVER['REQUEST_URI'] === '/favicon.ico') {
 // Set default blog URL if 'url' param is missing or empty
 $blogURL = isset($_GET['url']) && $_GET['url'] !== '' ? $_GET['url'] : null;
 
-// get layout param
-$layout = $_GET['layout'] ?? 'horizontal';
-$layout = match (strtolower($layout)) {
-    'h', 'horizontal' => 'horizontal',
-    'v', 'vertical' => 'vertical',
-    default => 'horizontal',
-};
-
 if (!$blogURL) {
     http_response_code(400);
     echo "Missing 'url' parameter";
     exit();
 }
 
+// get layout param
+$layout = $_GET['layout'] ?? 'vertical';
+$layout = match (strtolower($layout)) {
+    'h', 'horizontal' => 'horizontal',
+    'v', 'vertical' => 'vertical',
+    default => 'vertical',
+};
+
+// get theme param
+$theme = $_GET['theme'] ?? 'default';
+
 // Generate and output SVG
 header('Content-Type: image/svg+xml');
-$card = new Card($blogURL, $layout);
+$card = new Card($blogURL, $layout, $theme);
 echo $card->render();
