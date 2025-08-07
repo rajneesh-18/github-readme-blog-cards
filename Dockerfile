@@ -22,6 +22,7 @@ RUN composer install --no-dev --optimize-autoloader
 RUN chown -R www-data:www-data /var/www/html /var/www/src
 RUN a2enmod rewrite
 
+
 # Expose port 80
 EXPOSE 80
 
