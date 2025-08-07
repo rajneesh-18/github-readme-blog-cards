@@ -59,6 +59,30 @@ To use a **layout**, append `&layout=` followed by layout value available at the
 
 <br/>
 
+## 🌈 Themes
+
+To use a **theme**, append `&theme=` followed by a theme value available at the end of source URL :
+
+```md
+[![Blog Title](https://github-readme-blog-cards.onrender.com?url=<blog_URL>&theme=dark)](blog_URL)
+```
+
+<br/>
+
+|           Theme           |                                                                                                                          Preview                                                                                                                           |
+| :-----------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| `default` <br/> (default) | <br/> [![Blog](https://github-readme-blog-cards.onrender.com?url=https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec&layout=vertical)](https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec)  |
+|       `light-gray`        | <br/> [![Blog](https://github-readme-blog-cards.onrender.com?url=https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec&theme=light-gray)](https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec) |
+|         `pastel`          |   <br/> [![Blog](https://github-readme-blog-cards.onrender.com?url=https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec&theme=pastel)](https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec)   |
+|          `sunny`          |   <br/> [![Blog](https://github-readme-blog-cards.onrender.com?url=https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec&theme=sunny)](https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec)    |
+|          `mint`           |    <br/> [![Blog](https://github-readme-blog-cards.onrender.com?url=https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec&theme=mint)](https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec)    |
+|          `dark`           |    <br/> [![Blog](https://github-readme-blog-cards.onrender.com?url=https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec&theme=dark)](https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec)    |
+|         `carbon`          |   <br/> [![Blog](https://github-readme-blog-cards.onrender.com?url=https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec&theme=carbon)](https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec)   |
+|         `dracula`         |  <br/> [![Blog](https://github-readme-blog-cards.onrender.com?url=https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec&theme=dracula)](https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec)   |
+|         `copper`          |   <br/> [![Blog](https://github-readme-blog-cards.onrender.com?url=https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec&theme=copper)](https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec)   |
+
+<br/>
+
 ## 🤗 Contributions
 
 Contributions are most welcome! Feel free to [open an issue](https://github.com/DenverCoder1/github-readme-streak-stats/issues/new/choose) or submit a [pull request](https://github.com/DenverCoder1/github-readme-streak-stats/compare) if you have a way to improve this project.
