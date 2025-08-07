@@ -9,6 +9,15 @@ if ($_SERVER['REQUEST_URI'] === '/favicon.ico') {
     exit();
 }
 
+// health check route
+$requestUri = $_SERVER['REQUEST_URI'];
+
+if ($requestUri === '/healthz') {
+    http_response_code(200);
+    echo 'OK';
+    exit();
+}
+
 // Set default blog URL if 'url' param is missing or empty
 $blogURL = isset($_GET['url']) && $_GET['url'] !== '' ? $_GET['url'] : null;
 
