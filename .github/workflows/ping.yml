@@ -1,0 +1,21 @@
+name: Keep Render Awake
+
+on:
+  schedule:
+    - cron: '*/14 * * * *'  # every 14 minutes
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Time and Ping
+        shell: bash
+        run: |
+          IST_HOUR=$(TZ=Asia/Kolkata date +%H)
+          echo "Current IST Hour: $IST_HOUR"
+          if [ "$IST_HOUR" -ge 11 ] && [ "$IST_HOUR" -le 23 ]; then
+            echo "Pinging your service..."
+            curl -s https://github-readme-blog-cards.onrender.com/healthz > /dev/null || echo "Ping failed"
+          else
+            echo "Outside active hours. Skipping ping."
+          fi
