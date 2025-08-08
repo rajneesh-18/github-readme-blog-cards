@@ -29,7 +29,21 @@ $layout = match (strtolower($layout)) {
 // get theme param
 $theme = $_GET['theme'] ?? 'default';
 
-// Generate and output SVG
-header('Content-Type: image/svg+xml');
 $card = new Card($blogURL, $layout, $theme);
+
+// Create ETag based on URL + theme (same URL = same ETag)
+$etag = md5($blogURL . $theme . $layout);
+
+// Set headers
+header('Content-Type: image/svg+xml');
+header('Cache-Control: public, max-age=7200'); // 2 hours
+header('Etag: "' . $etag . '"');
+header('Last-Modified: ' . gmdate('D, d M Y H:i:s', strtotime('-1 hour')) . ' GMT');
+
+// Handle If-None-Match for 304 responses
+if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] === '"' . $etag . '"') {
+    http_response_code(304);
+    exit();
+}
+
 echo $card->render();
