@@ -1,8 +1,15 @@
 # Use PHP with Composer installed
 FROM php:8.2-apache
 
-# Install dependencies required for Composer (zip, unzip)
-RUN apt-get update && apt-get install -y unzip zip
+# Install dependencies required for Composer (unzipm zip) AND GD extension
+RUN apt-get update && apt-get install -y \
+    unzip zip \
+    libjpeg-dev \
+    libpng-dev \
+    libwebp-dev \
+    && docker-php-ext-configure gd --with-jpeg --with-webp \
+    && docker-php-ext-install gd \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install Composer globally
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer

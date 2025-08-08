@@ -84,11 +84,43 @@ class Card
 
             if ($html) {
                 $meta = $this->extractMetadata($html);
-                return $this->generateSVG($meta);
+                return $this->compressSVG($meta);
             } else {
                 echo 'Could not fetch the URL.';
             }
         }
+    }
+
+    /**
+     * compress SVG
+     *
+     * @param array<string,string> blog metadata
+     * @return string compressed svg
+     */
+    private function compressSVG($meta)
+    {
+        $svgContent = $this->generateSVG($meta);
+
+        // Remove unnecessary whitespace but keep structure
+        $svgContent = preg_replace('/>\s+</', '><', $svgContent);
+
+        // Remove comments
+        $svgContent = preg_replace('/<!--.*?-->/', '', $svgContent);
+
+        // Optimize path data (round numbers to 1 decimal place)
+        $svgContent = preg_replace_callback(
+            '/(\d+\.\d{2,})/',
+            function ($matches) {
+                return round($matches[1], 1);
+            },
+            $svgContent,
+        );
+
+        // Remove unnecessary attributes
+        $svgContent = str_replace(' fill-opacity="1"', '', $svgContent);
+        $svgContent = str_replace(' stroke="none"', '', $svgContent);
+
+        return $svgContent;
     }
 
     /**
@@ -496,20 +528,64 @@ class Card
      * @param string image URL
      * @return string base64 version of image
      */
-    private function fetchAndEncodeImage($url): string
+    private function fetchAndEncodeImage($url)
     {
-        $imageData = @file_get_contents($url);
-        if ($imageData === false) {
+        try {
+            $imageData = file_get_contents($url);
+            if (!$imageData) {
+                return null;
+            }
+
+            $image = imagecreatefromstring($imageData);
+            if (!$image) {
+                return null;
+            }
+
+            $maxWidth = 350;
+            $originalWidth = imagesx($image);
+            $originalHeight = imagesy($image);
+
+            if ($originalWidth <= $maxWidth) {
+                // trying with webp
+                if (function_exists('imagewebp')) {
+                    ob_start();
+                    imagewebp($image, null, 85);
+                    $compressedData = ob_get_contents();
+                    ob_end_clean();
+                    imagedestroy($image);
+                    return 'data:image/webp;base64,' . base64_encode($compressedData);
+                }
+            }
+
+            $ratio = $maxWidth / $originalWidth;
+            $newHeight = (int) round($originalHeight * $ratio);
+
+            $resized = imagecreatetruecolor($maxWidth, $newHeight);
+            imageantialias($resized, true);
+
+            imagecopyresampled($resized, $image, 0, 0, 0, 0, $maxWidth, $newHeight, $originalWidth, $originalHeight);
+
+            // fallback to JPEG
+            if (function_exists('imagewebp')) {
+                ob_start();
+                imagewebp($resized, null, 80);
+                $compressedData = ob_get_contents();
+                ob_end_clean();
+                $mimeType = 'image/webp';
+            } else {
+                ob_start();
+                imagejpeg($resized, null, 85);
+                $compressedData = ob_get_contents();
+                ob_end_clean();
+                $mimeType = 'image/jpeg';
+            }
+
+            imagedestroy($image);
+            imagedestroy($resized);
+
+            return "data:$mimeType;base64," . base64_encode($compressedData);
+        } catch (Exception $e) {
             return null;
         }
-
-        // fetch accurate MIME type
-        $mimeType = @mime_content_type($url);
-        if ($mimeType === false) {
-            $mimeType = 'image/png';
-        }
-
-        $base64 = base64_encode($imageData);
-        return "data:{$mimeType};base64,{$base64}";
     }
 }
