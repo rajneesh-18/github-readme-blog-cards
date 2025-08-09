@@ -37,7 +37,7 @@
 ```
 
 <a href="https://medium.com/@RitikaAgrawal08/exploring-css-flexbox-getting-started-with-the-basics-1174eea3ad4e">
-  <img src="https://github-readme-blog-cards.onrender.com?url=https://medium.com/@RitikaAgrawal08/exploring-css-flexbox-getting-started-with-the-basics-1174eea3ad4e" alt="Blog Title"/>
+  <img src="https://github-readme-blog-cards.onrender.com?url=https://medium.com/@RitikaAgrawal08/exploring-css-flexbox-getting-started-with-the-basics-1174eea3ad4e&layout=vertical" alt="Blog Title"/>
 </a>
 
 <br/>
