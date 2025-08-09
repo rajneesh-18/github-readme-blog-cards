@@ -96,6 +96,7 @@ To use a **theme**, append `&theme=` followed by a theme value available at the 
 |         `dracula`         |  <br/> <img src="https://res.cloudinary.com/djix6uusx/image/upload/v1754741818/blog-card-dracula_jkc2vs.png" width='250' height='300' />  |
 |         `copper`          |  <br/> <img src="https://res.cloudinary.com/djix6uusx/image/upload/v1754742314/blog-card-copper_csmue1.png" width='250' height='300' />   |
 
+  
 <br/>
 
 ## 🤗 Contributions
