@@ -36,9 +36,7 @@
 </a>
 ```
 
-<a href="https://medium.com/@RitikaAgrawal08/exploring-css-flexbox-getting-started-with-the-basics-1174eea3ad4e">
-  <img src="https://github-readme-blog-cards.onrender.com?url=https://medium.com/@RitikaAgrawal08/exploring-css-flexbox-getting-started-with-the-basics-1174eea3ad4e&layout=vertical" alt="Blog Title"/>
-</a>
+<img src='https://res.cloudinary.com/djix6uusx/image/upload/v1754739171/blog-card-demo_qckoao.png' width='250' height='300'/>
 
 <br/>
 
@@ -67,10 +65,10 @@ To use a **layout**, append `&layout=` followed by layout value available at the
 
 <br/>
 
-|           Layout           |                                                                                                                                             Preview                                                                                                                                              |
-| :------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| `vertical` <br/> (default) | <br/> <a href="https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec"> <img src="https://github-readme-blog-cards.onrender.com?url=https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec&layout=vertical" alt="Z-index Property"/></a> |
-|        `horizontal`        |  <br/> <a href="https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec"> <img src="https://github-readme-blog-cards.onrender.com?url=https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec&layout=horizontal" alt="Z-index Property"/>  |
+|           Layout           |                                                                 Preview                                                                  |
+| :------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------: |
+| `vertical` <br/> (default) |   <br/> <img src='https://res.cloudinary.com/djix6uusx/image/upload/v1754739171/blog-card-demo_qckoao.png' width='250' height='300'/>    |
+|        `horizontal`        | <br/> <img src='https://res.cloudinary.com/djix6uusx/image/upload/v1754739711/blog-card-horizontal_f1ctcz.jpg' width='385' height='110'> |
 
 <br/>
 
@@ -86,18 +84,17 @@ To use a **theme**, append `&theme=` followed by a theme value available at the 
 
 <br/>
 
-
-|           Theme           |                                                                                                                                                      Preview                                                                                                                                                      |
-| :-----------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| `default` <br/> (default) |         <br/> <a href="https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec"> <img src="https://github-readme-blog-cards.onrender.com?url=https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec&layout=vertical" alt="Z-index Property"/></a>          |
-|          `sunny`          |   <br/> <a href="https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec"> <img src="https://github-readme-blog-cards.onrender.com?url=https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec&layout=vertical&theme=sunny" alt="Z-index Property"/></a>    |
-|       `light-gray`        | <br/> <a href="https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec"> <img src="https://github-readme-blog-cards.onrender.com?url=https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec&layout=vertical&theme=light-gray" alt="Z-index Property"/></a> |
-|         `pastel`          |   <br/> <a href="https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec"> <img src="https://github-readme-blog-cards.onrender.com?url=https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec&layout=vertical&theme=pastel" alt="Z-index Property"/></a>   |
-|          `mint`           |    <br/> <a href="https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec"> <img src="https://github-readme-blog-cards.onrender.com?url=https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec&layout=vertical&theme=mint" alt="Z-index Property"/></a>    |
-|          `dark`           |    <br/> <a href="https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec"> <img src="https://github-readme-blog-cards.onrender.com?url=https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec&layout=vertical&theme=dark" alt="Z-index Property"/></a>    |
-|         `carbon`          |   <br/> <a href="https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec"> <img src="https://github-readme-blog-cards.onrender.com?url=https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec&layout=vertical&theme=carbon" alt="Z-index Property"/></a>   |
-|         `dracula`         |  <br/> <a href="https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec"> <img src="https://github-readme-blog-cards.onrender.com?url=https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec&layout=vertical&theme=dracula" alt="Z-index Property"/></a>   |
-|         `copper`          |   <br/> <a href="https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec"> <img src="https://github-readme-blog-cards.onrender.com?url=https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec&layout=vertical&theme=copper" alt="Z-index Property"/></a>   |
+|           Theme           |                                                                  Preview                                                                  |
+| :-----------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: |
+| `default` <br/> (default) |    <br/> <img src='https://res.cloudinary.com/djix6uusx/image/upload/v1754739171/blog-card-demo_qckoao.png' width='250' height='300'/>    |
+|          `sunny`          |   <br/> <img src='https://res.cloudinary.com/djix6uusx/image/upload/v1754739940/blog-card-sunny_y8cubp.png' width='250' height='300'/>    |
+|       `light-gray`        | <br/> <img src="https://res.cloudinary.com/djix6uusx/image/upload/v1754740352/blog-card-light-gray_pk0bsm.png" width='250' height='300'/> |
+|         `pastel`          |  <br/> <img src="https://res.cloudinary.com/djix6uusx/image/upload/v1754740826/blog-card-pastel_izphr2.png" width='250' height='300' />   |
+|          `mint`           |   <br/> <img src="https://res.cloudinary.com/djix6uusx/image/upload/v1754740745/blog-card-mint_o1i1ms.png" width='250' height='300' />    |
+|          `dark`           |    <br/> <img src="https://res.cloudinary.com/djix6uusx/image/upload/v1754740660/blog-card-dark_ovjasp.png" width='250' height='300'/>    |
+|         `carbon`          |  <br/> <img src="https://res.cloudinary.com/djix6uusx/image/upload/v1754741699/blog-card-carbon_hd2jg7.png" width='250' height='300' />   |
+|         `dracula`         |  <br/> <img src="https://res.cloudinary.com/djix6uusx/image/upload/v1754741818/blog-card-dracula_jkc2vs.png" width='250' height='300' />  |
+|         `copper`          |  <br/> <img src="https://res.cloudinary.com/djix6uusx/image/upload/v1754742314/blog-card-copper_csmue1.png" width='250' height='300' />   |
 
   
 <br/>
