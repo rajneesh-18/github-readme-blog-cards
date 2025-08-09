@@ -86,6 +86,7 @@ To use a **theme**, append `&theme=` followed by a theme value available at the 
 
 <br/>
 
+
 |           Theme           |                                                                                                                                                      Preview                                                                                                                                                      |
 | :-----------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 | `default` <br/> (default) |         <br/> <a href="https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec"> <img src="https://github-readme-blog-cards.onrender.com?url=https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec&layout=vertical" alt="Z-index Property"/></a>          |
@@ -98,6 +99,7 @@ To use a **theme**, append `&theme=` followed by a theme value available at the 
 |         `dracula`         |  <br/> <a href="https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec"> <img src="https://github-readme-blog-cards.onrender.com?url=https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec&layout=vertical&theme=dracula" alt="Z-index Property"/></a>   |
 |         `copper`          |   <br/> <a href="https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec"> <img src="https://github-readme-blog-cards.onrender.com?url=https://medium.com/@RitikaAgrawal08/diving-deep-into-z-index-property-d60e3443f4ec&layout=vertical&theme=copper" alt="Z-index Property"/></a>   |
 
+  
 <br/>
 
 ## 🤗 Contributions
