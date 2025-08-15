@@ -1,7 +1,7 @@
 ---
 name: Theme Request
 about: Request a new theme for the blog card
-title: Theme - [theme_name]
+title: New Theme - [theme_name]
 labels: good first issue
 assignees: ''
 
