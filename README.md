@@ -96,12 +96,11 @@ To use a **theme**, append `&theme=` followed by a theme value available at the 
 |         `dracula`         |  <br/> <img src="https://res.cloudinary.com/djix6uusx/image/upload/v1754741818/blog-card-dracula_jkc2vs.png" width='250' height='300' />  |
 |         `copper`          |  <br/> <img src="https://res.cloudinary.com/djix6uusx/image/upload/v1754742314/blog-card-copper_csmue1.png" width='250' height='300' />   |
 
-  
 <br/>
 
 ## 🤗 Contributions
 
-Contributions are most welcome! Feel free to [open an issue](https://github.com/DenverCoder1/github-readme-streak-stats/issues/new/choose) or submit a [pull request](https://github.com/DenverCoder1/github-readme-streak-stats/compare) if you have a way to improve this project.
+Contributions are most welcome! Feel free to [open an issue](https://github.com/Ritika-Agrawal811/github-readme-blog-cards/issues/new/choose) or submit a [pull request](https://github.com/Ritika-Agrawal811/github-readme-blog-cards/compare) if you have a way to improve this project.
 
 Make sure your request is meaningful and you have tested the app locally before submitting a pull request.
 
