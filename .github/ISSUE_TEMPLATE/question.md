@@ -4,7 +4,6 @@ about: A doubt or a question about using the project or its code
 title: Question - [short_description]
 labels: help wanted
 assignees: ''
-
 ---
 
 **Description**

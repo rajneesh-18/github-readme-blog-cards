@@ -4,7 +4,6 @@ about: Request a new theme for the blog card
 title: New Theme - [theme_name]
 labels: good first issue
 assignees: ''
-
 ---
 
 **Describe your theme in detail**
