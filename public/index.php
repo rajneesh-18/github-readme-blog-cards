@@ -36,7 +36,7 @@ $etag = md5($blogURL . $theme . $layout);
 
 // Set headers
 header('Content-Type: image/svg+xml');
-header('Cache-Control: public, max-age=7200'); // 2 hours
+header('Cache-Control: public, max-age=432000'); // 5 days
 header('Etag: "' . $etag . '"');
 header('Last-Modified: ' . gmdate('D, d M Y H:i:s', strtotime('-1 hour')) . ' GMT');
 
