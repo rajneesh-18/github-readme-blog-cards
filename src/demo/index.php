@@ -5,7 +5,9 @@ $themes = include __DIR__ . '/../theme/themes_list.php';
 // Determine defaults
 $defaultLayout = 'vertical';
 $defaultTheme = 'default';
-$defaultUrl = 'https://github.blog/changelog/'; // safe default blog URL
+$defaultUrl = 'https://medium.com/@RitikaAgrawal08/exploring-css-flexbox-getting-started-with-the-basics-1174eea3ad4e';
+
+// safe default blog URL
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +20,7 @@ $defaultUrl = 'https://github.blog/changelog/'; // safe default blog URL
 </head>
 <body>
     <header class="demo-header">
-        <h1>Blog Cards Demo</h1>
+        <h1>GitHub Readme Blog Cards</h1>
         <p>Preview SVG blog cards with different layouts and themes.</p>
     </header>
 
@@ -27,14 +29,16 @@ $defaultUrl = 'https://github.blog/changelog/'; // safe default blog URL
             <form id="demo-form">
                 <div class="form-group">
                     <label for="blog-url">Blog URL</label>
-                    <input type="url" id="blog-url" name="url" placeholder="https://example.com/blog/post" value="<?php echo htmlspecialchars($defaultUrl); ?>" required>
+                    <input type="url" id="blog-url" name="url" placeholder="https://example.com/blog/post" value="<?php echo htmlspecialchars(
+                        $defaultUrl,
+                    ); ?>" required>
                 </div>
 
                 <div class="form-group">
                     <label for="layout">Layout</label>
                     <select id="layout" name="layout">
-                        <option value="horizontal">Horizontal</option>
-                        <option value="vertical" selected>Vertical</option>
+                        <option value="horizontal">horizontal</option>
+                        <option value="vertical" selected>vertical</option>
                     </select>
                 </div>
 
@@ -42,7 +46,9 @@ $defaultUrl = 'https://github.blog/changelog/'; // safe default blog URL
                     <label for="theme">Theme</label>
                     <select id="theme" name="theme">
                         <?php foreach ($themes as $name => $_): ?>
-                            <option value="<?php echo htmlspecialchars($name); ?>" <?php echo $name === $defaultTheme ? 'selected' : ''; ?>>
+                            <option value="<?php echo htmlspecialchars($name); ?>" <?php echo $name === $defaultTheme
+    ? 'selected'
+    : ''; ?>>
                                 <?php echo htmlspecialchars(ucfirst(str_replace('-', ' ', $name))); ?>
                             </option>
                         <?php endforeach; ?>
@@ -63,9 +69,13 @@ $defaultUrl = 'https://github.blog/changelog/'; // safe default blog URL
             </div>
             <div class="preview-stage">
                 <!-- Rendered via public/index.php which outputs SVG -->
-                <?php
-                  $initialSrc = '/?url=' . urlencode($defaultUrl) . '&layout=' . urlencode($defaultLayout) . '&theme=' . urlencode($defaultTheme);
-                ?>
+                <?php $initialSrc =
+                    'https://github-readme-blog-cards.onrender.com?url=' .
+                    $defaultUrl .
+                    '&layout=' .
+                    urlencode($defaultLayout) .
+                    '&theme=' .
+                    urlencode($defaultTheme); ?>
                 <img id="card-preview" alt="Blog card preview" src="<?php echo $initialSrc; ?>" />
             </div>
             <div class="preview-url">
@@ -74,11 +84,6 @@ $defaultUrl = 'https://github.blog/changelog/'; // safe default blog URL
             </div>
         </section>
     </main>
-
-    <footer class="demo-footer">
-        <p>Route: <code>/demo</code>. The preview requests <code>/</code> with query params and returns an SVG.</p>
-    </footer>
-
     <!-- Demo JS served via public/demo-js.php (assets live in src/demo/js) -->
     <script src="/demo-js"></script>
 </body>
