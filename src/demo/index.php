@@ -20,8 +20,11 @@ $defaultUrl = 'https://medium.com/@RitikaAgrawal08/exploring-css-flexbox-getting
 </head>
 <body>
     <header class="demo-header">
-        <h1>GitHub Readme Blog Cards</h1>
-        <p>Preview SVG blog cards with different layouts and themes.</p>
+        <div>
+            <h1>GitHub Readme Blog Cards</h1>
+            <p>Preview SVG blog cards with different layouts and themes.</p>
+        </div>
+        <button class="theme-toggle" id="theme-mode" aria-label="Toggle theme">Light mode</button>
     </header>
 
     <main class="demo-container">
@@ -46,10 +49,8 @@ $defaultUrl = 'https://medium.com/@RitikaAgrawal08/exploring-css-flexbox-getting
                     <label for="theme">Theme</label>
                     <select id="theme" name="theme">
                         <?php foreach ($themes as $name => $_): ?>
-                            <option value="<?php echo htmlspecialchars($name); ?>" <?php echo $name === $defaultTheme
-    ? 'selected'
-    : ''; ?>>
-                                <?php echo htmlspecialchars(ucfirst(str_replace('-', ' ', $name))); ?>
+                            <option value="<?php echo htmlspecialchars($name); ?>" <?php echo $name === $defaultTheme ? 'selected' : ''; ?>>
+                                <?php echo htmlspecialchars(strtolower(str_replace('-', ' ', $name))); ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
@@ -69,18 +70,14 @@ $defaultUrl = 'https://medium.com/@RitikaAgrawal08/exploring-css-flexbox-getting
             </div>
             <div class="preview-stage">
                 <!-- Rendered via public/index.php which outputs SVG -->
-                <?php $initialSrc =
-                    'https://github-readme-blog-cards.onrender.com?url=' .
-                    $defaultUrl .
-                    '&layout=' .
-                    urlencode($defaultLayout) .
-                    '&theme=' .
-                    urlencode($defaultTheme); ?>
+                <?php
+                  $initialSrc = '/?url=' . urlencode($defaultUrl) . '&layout=' . urlencode($defaultLayout) . '&theme=' . urlencode($defaultTheme);
+                ?>
                 <img id="card-preview" alt="Blog card preview" src="<?php echo $initialSrc; ?>" />
             </div>
             <div class="preview-url">
-                <label>Shareable URL</label>
-                <input type="text" id="share-url" readonly>
+                <label>HTML Code</label>
+                <textarea id="html-code" readonly></textarea>
             </div>
         </section>
     </main>

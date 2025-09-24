@@ -8,6 +8,17 @@
   --border: #1f2542;
 }
 
+/* Light mode overrides */
+:root[data-theme="light"] {
+  --bg: #f7f8fb;
+  --panel: #ffffff;
+  --text: #0f172a;
+  --muted: #475569;
+  --accent: #3730a3;
+  --accent-2: #059669;
+  --border: #e5e7eb;
+}
+
 *,
 *::before,
 *::after {
@@ -21,63 +32,82 @@ body {
 
 body {
   margin: 0;
-  font-family:
-    system-ui,
-    -apple-system,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    'Apple Color Emoji',
-    'Segoe UI Emoji';
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
   color: var(--text);
-  background: radial-gradient(1200px 600px at 10% -10%, #132046 0%, #0b1020 40%, #0b1020 100%);
+  background:
+    radial-gradient(1200px 600px at 10% -10%, #132046 0%, #0b1020 40%, #0b1020 100%);
+}
+:root[data-theme="light"] body {
+  background: linear-gradient(180deg, #ffffff, #f7f8fb);
 }
 
 /* Header */
 .demo-header {
   padding: 24px 20px;
   border-bottom: 1px solid var(--border);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0));
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 }
-
 .demo-header h1 {
-  margin: 0 0 6px;
-  font-size: 2rem;
+  margin: 0;
+  font-size: 2.5rem; /* requested size */
   letter-spacing: 0.2px;
+  line-height: 1.1;
+}
+@media (max-width: 680px) {
+  .demo-header h1 {
+    font-size: 2rem; /* responsive downscale */
+  }
+}
+@media (max-width: 420px) {
+  .demo-header h1 {
+    font-size: 1.75rem; /* further downscale for very small screens */
+  }
 }
 .demo-header p {
-  margin: 0;
+  margin: 6px 0 0;
   color: var(--muted);
-  font-size: 1rem;
+  font-size: 0.95rem;
+}
+
+.theme-toggle {
+  all: unset;
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
 }
 
 /* Layout */
 .demo-container {
   display: grid;
   grid-template-columns: 1fr 1.2fr;
-  gap: 1rem;
-  padding: 1rem;
+  gap: 20px;
+  padding: 20px;
 }
-
 @media (max-width: 980px) {
   .demo-container {
     grid-template-columns: 1fr;
   }
 }
 
-.controls,
-.preview {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0));
+.controls, .preview {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0));
   border: 1px solid var(--border);
-  border-radius: 1rem;
-  padding: 1rem;
+  border-radius: 16px;
+  padding: 16px;
 }
 
 /* Form */
 #demo-form {
   display: grid;
-  gap: 1rem;
+  gap: 14px;
 }
 
 .form-group {
@@ -91,8 +121,8 @@ label {
   color: var(--muted);
 }
 
-input[type='url'],
-input[type='text'],
+input[type="url"],
+textarea,
 select {
   padding: 10px 12px;
   border-radius: 10px;
@@ -101,9 +131,15 @@ select {
   color: var(--text);
   outline: none;
 }
+:root[data-theme="light"] input[type="url"],
+:root[data-theme="light"] textarea,
+:root[data-theme="light"] select {
+  background: #ffffff;
+}
 
-input[readonly] {
-  opacity: 0.9;
+textarea {
+  min-height: 120px;
+  resize: vertical;
 }
 
 input::placeholder {
@@ -116,7 +152,7 @@ select {
 
 .actions {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   margin-top: 6px;
 }
 
@@ -124,7 +160,9 @@ button {
   all: unset;
   background: linear-gradient(180deg, #5460ff, #3b44c9);
   color: white;
-  padding: 10px 14px;
+  padding: 12px 20px; /* wider buttons */
+  min-width: 130px;   /* wider buttons */
+  text-align: center;
   border-radius: 10px;
   font-weight: 600;
   letter-spacing: 0.2px;
@@ -142,7 +180,7 @@ button#reset {
   align-items: baseline;
   justify-content: space-between;
   color: var(--muted);
-  font-size: 1rem;
+  font-size: 13px;
   margin-bottom: 10px;
 }
 
@@ -154,6 +192,10 @@ button#reset {
   border: 1px dashed #23305d;
   border-radius: 12px;
   overflow: hidden;
+}
+:root[data-theme="light"] .preview-stage {
+  background: #ffffff;
+  border-color: #d1d5db;
 }
 
 #card-preview {
@@ -171,6 +213,6 @@ button#reset {
 .demo-footer {
   padding: 20px;
   color: var(--muted);
-  font-size: 1rem;
+  font-size: 13px;
   border-top: 1px solid var(--border);
 }

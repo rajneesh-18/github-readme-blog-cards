@@ -4,9 +4,10 @@
   const layoutSelect = document.getElementById('layout');
   const themeSelect = document.getElementById('theme');
   const previewImg = document.getElementById('card-preview');
-  const shareUrl = document.getElementById('share-url');
   const previewSize = document.getElementById('preview-size');
   const resetBtn = document.getElementById('reset');
+  const htmlCode = document.getElementById('html-code');
+  const themeModeBtn = document.getElementById('theme-mode');
 
   const paramsToUrl = (url, layout, theme) => {
     const base = '/';
@@ -18,6 +19,21 @@
     return base + '?' + q.toString();
   };
 
+  const buildHtmlSnippet = (hrefUrl, layout, theme) => {
+    const imgSrc =
+      'https://github-readme-blog-cards.onrender.com' +
+      '?url=' +
+      encodeURIComponent(hrefUrl) +
+      '&layout=' +
+      encodeURIComponent(layout) +
+      '&theme=' +
+      encodeURIComponent(theme);
+
+    return `<a href="${hrefUrl}">
+  <img src="${imgSrc}" alt="Blog Card"/>
+</a>`;
+  };
+
   const render = () => {
     const url = urlInput.value.trim();
     const layout = layoutSelect.value;
@@ -27,8 +43,9 @@
 
     const previewSrc = paramsToUrl(url, layout, theme);
     previewImg.src = previewSrc;
-    shareUrl.value =
-      window.location.origin + '/demo?url=' + encodeURIComponent(url) + '&layout=' + layout + '&theme=' + theme;
+
+    // Update embeddable HTML code
+    htmlCode.value = buildHtmlSnippet(url, layout, theme);
   };
 
   // Initialize from query params if present
@@ -73,6 +90,21 @@
     themeSelect.value = 'default';
     render();
   });
+
+  // Theme mode toggle
+  const setThemeMode = (mode) => {
+    document.documentElement.setAttribute('data-theme', mode);
+    themeModeBtn.textContent = mode === 'light' ? 'Dark mode' : 'Light mode';
+  };
+
+  themeModeBtn.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme') || 'dark';
+    const next = current === 'dark' ? 'light' : 'dark';
+    setThemeMode(next);
+  });
+
+  // Default to dark mode
+  setThemeMode('dark');
 
   initFromQuery();
 })();
