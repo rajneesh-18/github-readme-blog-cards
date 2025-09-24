@@ -63,7 +63,10 @@ $defaultUrl = 'https://github.blog/changelog/'; // safe default blog URL
             </div>
             <div class="preview-stage">
                 <!-- Rendered via public/index.php which outputs SVG -->
-                <img id="card-preview" alt="Blog card preview" src="/" />
+                <?php
+                  $initialSrc = '/?url=' . urlencode($defaultUrl) . '&layout=' . urlencode($defaultLayout) . '&theme=' . urlencode($defaultTheme);
+                ?>
+                <img id="card-preview" alt="Blog card preview" src="<?php echo $initialSrc; ?>" />
             </div>
             <div class="preview-url">
                 <label>Shareable URL</label>
