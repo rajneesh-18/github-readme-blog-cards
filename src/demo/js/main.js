@@ -58,10 +58,32 @@
     if (!codeSection || !htmlLabel || !htmlCode) return;
     htmlLabel.textContent = 'HTML Code';
     htmlCode.style.display = 'block';
-    // remove any previous theme code block
-    const existing = codeSection.querySelector('#theme-code-block');
-    if (existing) existing.remove();
+    // remove any previous theme code UI
+    const existingContainer = codeSection.querySelector('#theme-code-container');
+    if (existingContainer) existingContainer.remove();
     htmlCode.value = snippet;
+  };
+
+  const attachCopyHandler = (btn, pre) => {
+    if (!btn || !pre) return;
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(pre.textContent || '');
+        btn.textContent = 'Copied';
+        setTimeout(() => (btn.textContent = 'Copy'), 1200);
+      } catch (e) {
+        // fallback
+        const range = document.createRange();
+        range.selectNodeContents(pre);
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        document.execCommand('copy');
+        sel.removeAllRanges();
+        btn.textContent = 'Copied';
+        setTimeout(() => (btn.textContent = 'Copy'), 1200);
+      }
+    });
   };
 
   const showThemeCode = (code) => {
@@ -69,14 +91,45 @@
     if (!codeSection || !htmlLabel) return;
     htmlLabel.textContent = 'Theme code';
     if (htmlCode) htmlCode.style.display = 'none';
-    let pre = codeSection.querySelector('#theme-code-block');
-    if (!pre) {
-      pre = document.createElement('pre');
-      pre.id = 'theme-code-block';
-      pre.className = 'code-block';
-      codeSection.appendChild(pre);
-    }
+
+    // remove previous container if any
+    const prev = codeSection.querySelector('#theme-code-container');
+    if (prev) prev.remove();
+
+    // container with copy button and pre
+    const container = document.createElement('div');
+    container.id = 'theme-code-container';
+    container.className = 'code-wrapper';
+
+    const copyBtn = document.createElement('button');
+    copyBtn.type = 'button';
+    copyBtn.id = 'copy-theme-code';
+    copyBtn.className = 'copy-btn';
+    copyBtn.textContent = 'Copy';
+
+    const pre = document.createElement('pre');
+    pre.id = 'theme-code-block';
+    pre.className = 'code-block';
     pre.textContent = code;
+
+    container.appendChild(copyBtn);
+    container.appendChild(pre);
+
+    // instructions
+    const instructions = document.createElement('div');
+    instructions.className = 'code-instructions';
+    instructions.innerHTML = `
+      <ol>
+        <li>Copy the generated array code and add it at the last of the array in <code>themes_list.php</code> (<code>src/theme/themes_list.php</code>).</li>
+        <li>Download the image from the preview and add it to <code>images/themes</code> folder. Make sure the name matches the theme name.</li>
+        <li>Add your theme in the theme table in <code>README</code>.</li>
+      </ol>
+    `;
+
+    codeSection.appendChild(container);
+    codeSection.appendChild(instructions);
+
+    attachCopyHandler(copyBtn, pre);
   };
 
   const render = () => {

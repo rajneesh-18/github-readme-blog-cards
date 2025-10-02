@@ -368,6 +368,26 @@ button#reset {
   gap: 6px;
 }
 
+.code-wrapper {
+  position: relative;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 12px;
+}
+:root[data-theme="light"] .copy-btn {
+  background: #f8fafc;
+}
+
 .code-block {
   padding: 10px 12px;
   border-radius: 10px;
@@ -383,6 +403,19 @@ button#reset {
 }
 :root[data-theme="light"] .code-block {
   background: #ffffff;
+}
+
+.code-instructions {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.code-instructions ol {
+  margin: 0;
+  padding-left: 18px;
+}
+.code-instructions code {
+  color: var(--text);
 }
 
 /* Footer */
