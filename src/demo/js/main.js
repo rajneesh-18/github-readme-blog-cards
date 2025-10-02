@@ -331,16 +331,73 @@
     ],`;
   };
 
+  // Helper: fetch server SVG (default theme is fine, we'll recolor)
+  const fetchServerSvg = async (blogUrl, layout, baseTheme = 'default') => {
+    const q = new URLSearchParams({ url: blogUrl, layout, theme: baseTheme });
+    const resp = await fetch('/?' + q.toString(), { credentials: 'same-origin' });
+    if (!resp.ok) throw new Error('Failed to fetch SVG');
+    return await resp.text();
+  };
+
+  // Helper: update colors inside the SVG's embedded CSS
+  const applyColorsToSvg = (svgText, colors) => {
+    // Replace .title fill
+    svgText = svgText.replace(/(\.title\s*\{[^}]*?fill:\s*)(#[0-9a-fA-F]{3,6})(\s*;)/, `$1${colors.title}$3`);
+    // Replace .description fill
+    svgText = svgText.replace(/(\.description\s*\{[^}]*?fill:\s*)(#[0-9a-fA-F]{3,6})(\s*;)/, `$1${colors.description}$3`);
+    // Replace .card-bg fill and stroke
+    svgText = svgText.replace(/(\.card-bg\s*\{[^}]*?fill:\s*)(#[0-9a-fA-F]{3,6})(\s*;)/, `$1${colors.background}$3`);
+    svgText = svgText.replace(/(\.card-bg\s*\{[^}]*?stroke:\s*)(#[0-9a-fA-F]{3,6})(\s*;)/, `$1${colors.stroke}$3`);
+    // Replace .tag fill (background)
+    svgText = svgText.replace(/(\.tag\s*\{[^}]*?fill:\s*)(#[0-9a-fA-F]{3,6})(\s*;)/, `$1${colors.tagBackground}$3`);
+    // Replace .tagTitle fill
+    svgText = svgText.replace(/(\.tagTitle\s*\{[^}]*?fill:\s*)(#[0-9a-fA-F]{3,6})(\s*;)/, `$1${colors.tagTitle}$3`);
+
+    return svgText;
+  };
+
   // Preview custom theme code into a <pre> block (and hide textarea)
-  previewThemeBtn.addEventListener('click', () => {
+  previewThemeBtn.addEventListener('click', async () => {
     const nameRaw = (newThemeName && newThemeName.value ? newThemeName.value : '').trim();
     if (!nameRaw) {
       showThemeNameError('name is required. lower case single word, if multiple separate by -');
       return;
     }
     clearThemeNameError();
+
+    // 1) Show theme code block and instructions
     const code = buildThemeCodeSnippet();
     showThemeCode(code);
+
+    // 2) Recolor server SVG and show preview inline (no server render for themed colors)
+    try {
+      const blogUrl = urlInput.value.trim();
+      const layout = layoutSelect.value;
+
+      if (blogUrl) {
+        const baseSvg = await fetchServerSvg(blogUrl, layout, 'default');
+
+        const colors = {
+          background: getTextValue('bg-color-text') || '#FDFDFF',
+          stroke: getTextValue('stroke-color-text') || '#E4E2E2',
+          title: getTextValue('title-color-text') || '#121212',
+          description: getTextValue('desc-color-text') || '#555555',
+          tagBackground: getTextValue('tag-bg-color-text') || '#F2F0EF',
+          tagTitle: getTextValue('tag-title-color-text') || '#333333',
+        };
+
+        const themedSvg = applyColorsToSvg(baseSvg, colors);
+
+        // Display via data URL
+        const dataUrl = 'data:image/svg+xml;utf8,' + encodeURIComponent(themedSvg);
+        previewImg.src = dataUrl;
+      }
+    } catch (e) {
+      // If anything fails, keep the previous preview and do nothing
+      console.error('Preview recolor failed', e);
+    }
+
+    themePreviewMode = true;
   });
 
   initFromQuery();
