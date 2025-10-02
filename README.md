@@ -82,6 +82,8 @@ To use a **theme**, append `&theme=` followed by a theme value available at the 
 </a>
 ```
 
+You can try themes and layouts in the live demo at `/demo`. The demo also includes an “Add new theme” UI for experimenting with custom color sets (stored locally in the browser). Note: server rendering currently supports only built-in themes listed below.
+
 <br/>
 
 |           Theme           |                                                                  Preview                                                                  |

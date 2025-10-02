@@ -10,6 +10,19 @@
   const themeModeBtn = document.getElementById('theme-mode');
   const downloadBtn = document.getElementById('download-card');
 
+  // Add new theme UI
+  const addThemeBtn = document.getElementById('add-theme-btn');
+  const newThemeForm = document.getElementById('new-theme-form');
+  const newThemeName = document.getElementById('new-theme-name');
+  const bgColor = document.getElementById('bg-color');
+  const strokeColor = document.getElementById('stroke-color');
+  const titleColor = document.getElementById('title-color');
+  const descColor = document.getElementById('desc-color');
+  const tagBgColor = document.getElementById('tag-bg-color');
+  const tagTitleColor = document.getElementById('tag-title-color');
+  const createThemeBtn = document.getElementById('create-theme');
+  const cancelCreateBtn = document.getElementById('cancel-create');
+
   const paramsToUrl = (url, layout, theme) => {
     const base = '/';
     const q = new URLSearchParams({
@@ -99,7 +112,7 @@
   };
 
   themeModeBtn.addEventListener('click', () => {
-    const current = document.documentElement.getAttribute('data-theme') || 'light';
+    const current = document.documentElement.getAttribute('data-theme') || 'dark';
     const next = current === 'dark' ? 'light' : 'dark';
     setThemeMode(next);
   });
@@ -125,12 +138,76 @@
       a.remove();
       URL.revokeObjectURL(objectUrl);
     } catch (e) {
-      // no-op; we keep UI minimal
       console.error('Download failed', e);
     }
   };
 
   downloadBtn.addEventListener('click', downloadCurrent);
+
+  // Add new theme: toggle form
+  addThemeBtn.addEventListener('click', () => {
+    const hidden = newThemeForm.classList.toggle('hidden');
+    newThemeForm.setAttribute('aria-hidden', hidden ? 'true' : 'false');
+  });
+
+  // Persist custom themes locally
+  const loadCustomThemes = () => {
+    try {
+      const raw = localStorage.getItem('customThemes');
+      return raw ? JSON.parse(raw) : {};
+    } catch {
+      return {};
+    }
+  };
+  const saveCustomThemes = (themes) => {
+    try {
+      localStorage.setItem('customThemes', JSON.stringify(themes));
+    } catch {}
+  };
+
+  const addThemeOption = (name) => {
+    const opt = document.createElement('option');
+    opt.value = name;
+    opt.textContent = name.toLowerCase();
+    themeSelect.appendChild(opt);
+  };
+
+  // Initialize dropdown with any existing custom themes
+  const customThemes = loadCustomThemes();
+  Object.keys(customThemes).forEach(addThemeOption);
+
+  // Create theme
+  createThemeBtn.addEventListener('click', () => {
+    const name = (newThemeName.value || '').trim();
+    if (!name) return;
+
+    const key = name.toLowerCase().replace(/\s+/g, '-');
+
+    customThemes[key] = {
+      background: bgColor.value,
+      stroke: strokeColor.value,
+      title: titleColor.value,
+      description: descColor.value,
+      tagBackground: tagBgColor.value,
+      tagTitle: tagTitleColor.value,
+    };
+    saveCustomThemes(customThemes);
+
+    addThemeOption(key);
+    themeSelect.value = key;
+
+    // collapse and reset minimal inputs
+    newThemeForm.classList.add('hidden');
+    newThemeForm.setAttribute('aria-hidden', 'true');
+
+    render();
+  });
+
+  // Cancel create
+  cancelCreateBtn.addEventListener('click', () => {
+    newThemeForm.classList.add('hidden');
+    newThemeForm.setAttribute('aria-hidden', 'true');
+  });
 
   initFromQuery();
 })();

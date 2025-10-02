@@ -47,18 +47,58 @@ $defaultUrl = 'https://medium.com/@RitikaAgrawal08/exploring-css-flexbox-getting
 
                 <div class="form-group">
                     <label for="theme">Theme</label>
-                    <select id="theme" name="theme">
-                        <?php foreach ($themes as $name => $_): ?>
-                            <option value="<?php echo htmlspecialchars($name); ?>" <?php echo $name === $defaultTheme ? 'selected' : ''; ?>>
-                                <?php echo htmlspecialchars(strtolower(str_replace('-', ' ', $name))); ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
+                    <div class="inline-group">
+                        <select id="theme" name="theme">
+                            <?php foreach ($themes as $name => $_): ?>
+                                <option value="<?php echo htmlspecialchars($name); ?>" <?php echo $name === $defaultTheme ? 'selected' : ''; ?>>
+                                    <?php echo htmlspecialchars(strtolower(str_replace('-', ' ', $name))); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                        <button type="button" id="add-theme-btn" class="secondary">Add new theme</button>
+                    </div>
+                </div>
+
+                <div id="new-theme-form" class="new-theme hidden" aria-hidden="true">
+                    <div class="form-row">
+                        <label for="new-theme-name">Theme name</label>
+                        <input type="text" id="new-theme-name" placeholder="e.g. ocean">
+                    </div>
+                    <div class="color-grid">
+                        <div>
+                            <label for="bg-color">background color</label>
+                            <input type="color" id="bg-color" value="#FDFDFF">
+                        </div>
+                        <div>
+                            <label for="stroke-color">stroke color</label>
+                            <input type="color" id="stroke-color" value="#E4E2E2">
+                        </div>
+                        <div>
+                            <label for="title-color">title color</label>
+                            <input type="color" id="title-color" value="#121212">
+                        </div>
+                        <div>
+                            <label for="desc-color">description color</label>
+                            <input type="color" id="desc-color" value="#555555">
+                        </div>
+                        <div>
+                            <label for="tag-bg-color">tag background color</label>
+                            <input type="color" id="tag-bg-color" value="#F2F0EF">
+                        </div>
+                        <div>
+                            <label for="tag-title-color">tag title color</label>
+                            <input type="color" id="tag-title-color" value="#333333">
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button type="button" id="create-theme">Create theme</button>
+                        <button type="button" id="cancel-create" class="secondary">Cancel</button>
+                    </div>
                 </div>
 
                 <div class="actions">
-                    <button type="submit" id="apply" class="wide">Apply</button>
-                    <button type="button" id="reset" class="wide">Reset</button>
+                    <button type="submit" id="apply">Apply</button>
+                    <button type="button" id="reset">Reset</button>
                 </div>
             </form>
         </section>

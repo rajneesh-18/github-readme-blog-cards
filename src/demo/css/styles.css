@@ -121,6 +121,48 @@ label {
   color: var(--muted);
 }
 
+.inline-group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.secondary {
+  all: unset;
+  background: var(--panel);
+  color: var(--text);
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+}
+
+.new-theme.hidden {
+  display: none;
+}
+
+.new-theme .form-row {
+  display: grid;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.color-grid {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+@media (max-width: 640px) {
+  .color-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.color-grid > div {
+  display: grid;
+  gap: 6px;
+}
+
 input[type="url"],
 textarea,
 select {
