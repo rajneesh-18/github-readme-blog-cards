@@ -91,6 +91,7 @@ body {
   gap: 20px;
   padding: 20px;
 }
+
 @media (max-width: 980px) {
   .demo-container {
     grid-template-columns: 1fr;
@@ -291,24 +292,30 @@ select {
 
 button {
   all: unset;
-  background: linear-gradient(180deg, #5460ff, #3b44c9);
-  color: white;
   text-align: center;
   border-radius: 10px;
   font-weight: 600;
   letter-spacing: 0.2px;
   cursor: pointer;
-  border: 1px solid #5a64ff;
+
 }
 
 button.wide {
- padding: 12px 20px; /* wider buttons */
+  padding: 12px 20px; /* wider buttons */
   min-width: 130px;   /* wider buttons */
 }
 
 button#reset {
   background: linear-gradient(180deg, #00d37f, #10b981);
   border-color: #08c77d;
+  color: white;
+}
+
+button#apply,
+button#add-theme-btn {
+  background: linear-gradient(180deg, #5460ff, #3b44c9);
+  color: white;
+  order: 1px solid #5a64ff;
 }
 
 /* Preview */
@@ -374,7 +381,7 @@ button#reset {
 
 .copy-btn {
   position: absolute;
-  top: 12px; /* add a little more top so it doesn't touch the edge */
+  top: 1.5rem;
   right: 12px;
   padding: 6px 10px;
   border-radius: 8px;
