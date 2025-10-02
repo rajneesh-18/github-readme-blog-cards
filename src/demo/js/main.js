@@ -224,7 +224,17 @@
   const downloadCurrent = async () => {
     try {
       const url = previewImg.src;
-      const theme = (themeSelect.value || 'card') + '.svg';
+
+      // Determine filename based on mode:
+      // - If custom theme preview is active: use new theme name (lowercase, spaces -> dashes)
+      // - Else: use the currently selected built-in theme
+      const customKey =
+        (newThemeName && newThemeName.value ? newThemeName.value : '')
+          .trim()
+          .toLowerCase()
+          .replace(/\s+/g, '-');
+      const filename =
+        (themePreviewMode && customKey ? customKey : (themeSelect.value || 'card')) + '.svg';
 
       const resp = await fetch(url, { credentials: 'same-origin' });
       const blob = await resp.blob();
@@ -232,7 +242,7 @@
       const objectUrl = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = objectUrl;
-      a.download = theme;
+      a.download = filename;
       document.body.appendChild(a);
       a.click();
       a.remove();
