@@ -263,14 +263,18 @@ select {
 
 button {
   all: unset;
-  background: linear-gradient(180deg, #5460ff, #3b44c9);
-  color: white;
   text-align: center;
   border-radius: 10px;
   font-weight: 600;
   letter-spacing: 0.2px;
   cursor: pointer;
+}
+
+button#apply,
+button#add-theme-btn {
+  background: linear-gradient(180deg, #5460ff, #3b44c9);
   border: 1px solid #5a64ff;
+  color: white;
 }
 
 button.wide {
@@ -281,6 +285,7 @@ button.wide {
 button#reset {
   background: linear-gradient(180deg, #00d37f, #10b981);
   border-color: #08c77d;
+   color: white;
 }
 
 /* Preview */
