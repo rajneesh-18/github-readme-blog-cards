@@ -66,27 +66,27 @@ $defaultUrl = 'https://medium.com/@RitikaAgrawal08/exploring-css-flexbox-getting
                     </div>
                     <div class="color-grid">
                         <div>
-                            <label for="bg-color">background color</label>
+                            <label for="bg-color">Background Color</label>
                             <input type="color" id="bg-color" value="#FDFDFF">
                         </div>
                         <div>
-                            <label for="stroke-color">stroke color</label>
+                            <label for="stroke-color">Stroke Color</label>
                             <input type="color" id="stroke-color" value="#E4E2E2">
                         </div>
                         <div>
-                            <label for="title-color">title color</label>
+                            <label for="title-color">Title Color</label>
                             <input type="color" id="title-color" value="#121212">
                         </div>
                         <div>
-                            <label for="desc-color">description color</label>
+                            <label for="desc-color">Description Color</label>
                             <input type="color" id="desc-color" value="#555555">
                         </div>
                         <div>
-                            <label for="tag-bg-color">tag background color</label>
+                            <label for="tag-bg-color">Tag Background Color</label>
                             <input type="color" id="tag-bg-color" value="#F2F0EF">
                         </div>
                         <div>
-                            <label for="tag-title-color">tag title color</label>
+                            <label for="tag-title-color">Tag Title Color</label>
                             <input type="color" id="tag-title-color" value="#333333">
                         </div>
                     </div>
@@ -96,8 +96,8 @@ $defaultUrl = 'https://medium.com/@RitikaAgrawal08/exploring-css-flexbox-getting
                 </div>
 
                 <div class="actions">
-                    <button type="submit" id="apply">Apply</button>
-                    <button type="button" id="reset">Reset</button>
+                    <button type="submit" id="apply" class="wide">Apply</button>
+                    <button type="button" id="reset" class="wide">Reset</button>
                 </div>
             </form>
         </section>
