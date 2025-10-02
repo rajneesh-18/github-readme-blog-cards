@@ -61,8 +61,8 @@ $defaultUrl = 'https://medium.com/@RitikaAgrawal08/exploring-css-flexbox-getting
 
                 <div id="new-theme-form" class="new-theme hidden" aria-hidden="true">
                     <div class="form-row">
-                        <label for="new-theme-name">Theme name</label>
-                        <input type="text" id="new-theme-name" placeholder="e.g. ocean">
+                        <label for="new-theme-name">Theme name <span class="req">*</span></label>
+                        <input type="text" id="new-theme-name" placeholder="e.g. ocean" required>
                     </div>
                     <div class="color-grid">
                         <div>
@@ -109,6 +109,7 @@ $defaultUrl = 'https://medium.com/@RitikaAgrawal08/exploring-css-flexbox-getting
                         </div>
                     </div>
                     <div class="actions">
+                        <button type="button" id="preview-theme" class="secondary">Preview</button>
                         <button type="button" id="cancel-create" class="secondary">Cancel</button>
                     </div>
                 </div>

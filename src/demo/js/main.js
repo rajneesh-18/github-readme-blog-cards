@@ -21,6 +21,11 @@
   const tagBgColor = document.getElementById('tag-bg-color');
   const tagTitleColor = document.getElementById('tag-title-color');
   const cancelCreateBtn = document.getElementById('cancel-create');
+  const previewThemeBtn = document.getElementById('preview-theme');
+
+  // For replacing HTML Code with Theme code when previewing custom theme
+  const htmlLabel = document.querySelector('.preview-url label');
+  let themePreviewMode = false;
 
   const paramsToUrl = (url, layout, theme) => {
     const base = '/';
@@ -57,8 +62,11 @@
     const previewSrc = paramsToUrl(url, layout, theme);
     previewImg.src = previewSrc;
 
-    // Update embeddable HTML code
-    htmlCode.value = buildHtmlSnippet(url, layout, theme);
+    // Update embeddable HTML code unless in theme preview mode
+    if (!themePreviewMode) {
+      htmlLabel.textContent = 'HTML Code';
+      htmlCode.value = buildHtmlSnippet(url, layout, theme);
+    }
   };
 
   // Initialize from query params if present
@@ -88,6 +96,7 @@
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
+    themePreviewMode = false; // reset back to HTML mode
     render();
   });
 
@@ -101,6 +110,7 @@
       'https://medium.com/@RitikaAgrawal08/exploring-css-flexbox-getting-started-with-the-basics-1174eea3ad4e';
     layoutSelect.value = 'vertical';
     themeSelect.value = 'default';
+    themePreviewMode = false; // reset back to HTML mode
     render();
   });
 
@@ -179,6 +189,37 @@
   cancelCreateBtn.addEventListener('click', () => {
     newThemeForm.classList.add('hidden');
     newThemeForm.setAttribute('aria-hidden', 'true');
+  });
+
+  // Preview custom theme code
+  const getTextValue = (id) => {
+    const el = document.getElementById(id);
+    return el ? el.value : '';
+  };
+
+  const buildThemeCodeSnippet = () => {
+    const nameRaw = (newThemeName.value || '').trim();
+    if (!nameRaw) return '';
+
+    const key = nameRaw.toLowerCase().replace(/\s+/g, '-');
+
+    const code =
+`'${key}' => [
+        'background' => '${getTextValue('bg-color-text') || '#FFFFFF'}',
+        'stroke' => '${getTextValue('stroke-color-text') || '#000000'}',
+        'title' => '${getTextValue('title-color-text') || '#000000'}',
+        'description' => '${getTextValue('desc-color-text') || '#000000'}',
+        'tagBackground' => '${getTextValue('tag-bg-color-text') || '#FFFFFF'}',
+        'tagTitle' => '${getTextValue('tag-title-color-text') || '#000000'}',
+    ],`;
+    return code;
+  };
+
+  previewThemeBtn.addEventListener('click', () => {
+    // Switch to "Theme code" view
+    htmlLabel.textContent = 'Theme code';
+    htmlCode.value = buildThemeCodeSnippet();
+    themePreviewMode = true;
   });
 
   initFromQuery();

@@ -118,8 +118,12 @@ body {
 label {
   font-weight: 600;
   font-size: 13px;
-  margin-bottom: 0.15rem;
   color: var(--muted);
+}
+label .req {
+  color: #ef4444; /* small red asterisk for required */
+  margin-left: 4px;
+  font-weight: 700;
 }
 
 .inline-group {
