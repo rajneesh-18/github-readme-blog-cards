@@ -124,6 +124,7 @@
     instructions.className = 'code-instructions';
     instructions.innerHTML = `
       <div class="instructions-title">Instructions</div>
+      <p>If you're satisfied with the theme preview and wish to integrate it into the project, follow these simple steps to finalize your contribution:</p>
       <ol>
         <li>Copy the generated array code and add it at the last of the array in <span class="file-chip">themes_list.php</span> (<span class="file-chip">src/theme/themes_list.php</span>).</li>
         <li>Download the image from the preview and add it to <span class="file-chip">images/themes</span> folder. Make sure the name matches the theme name.</li>
@@ -420,7 +421,7 @@
   previewThemeBtn.addEventListener('click', async () => {
     const nameRaw = (newThemeName && newThemeName.value ? newThemeName.value : '').trim();
     if (!nameRaw) {
-      showThemeNameError('name is required. lower case single word, if multiple separate by -');
+      showThemeNameError('Error: Name required. Must be lowercase and use hyphens (-) for multiple words (e.g., cool-new-theme).');
       return;
     }
     clearThemeNameError();
