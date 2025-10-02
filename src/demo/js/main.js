@@ -119,6 +119,7 @@
     const instructions = document.createElement('div');
     instructions.className = 'code-instructions';
     instructions.innerHTML = `
+      <div class="instructions-title">Instructions</div>
       <ol>
         <li>Copy the generated array code and add it at the last of the array in <code>themes_list.php</code> (<code>src/theme/themes_list.php</code>).</li>
         <li>Download the image from the preview and add it to <code>images/themes</code> folder. Make sure the name matches the theme name.</li>

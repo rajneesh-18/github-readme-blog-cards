@@ -374,8 +374,8 @@ button#reset {
 
 .copy-btn {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 12px; /* add a little more top so it doesn't touch the edge */
+  right: 12px;
   padding: 6px 10px;
   border-radius: 8px;
   border: 1px solid var(--border);
@@ -406,17 +406,14 @@ button#reset {
 }
 
 .code-instructions {
-  margin-top: 10px;
+  margin-top: 14px;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 14px; /* slightly larger */
+  line-height: 1.65; /* more readable */
 }
-.code-instructions ol {
-  margin: 0;
-  padding-left: 18px;
-}
-.code-instructions code {
-  color: var(--text);
-}
+.code-instructions .instructions-title {
+  font-size: 15px;
+ 
 
 /* Footer */
 .demo-footer {
