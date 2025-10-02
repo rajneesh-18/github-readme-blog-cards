@@ -73,6 +73,7 @@ $defaultUrl = 'https://medium.com/@RitikaAgrawal08/exploring-css-flexbox-getting
                 <?php
                   $initialSrc = '/?url=' . urlencode($defaultUrl) . '&layout=' . urlencode($defaultLayout) . '&theme=' . urlencode($defaultTheme);
                 ?>
+                <button type="button" id="download-card" class="download-btn" aria-label="Download image">↓</button>
                 <img id="card-preview" alt="Blog card preview" src="<?php echo $initialSrc; ?>" />
             </div>
             <div class="preview-url">

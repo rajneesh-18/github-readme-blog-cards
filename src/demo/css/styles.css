@@ -185,6 +185,7 @@ button#reset {
 }
 
 .preview-stage {
+  position: relative;
   display: grid;
   place-items: center;
   min-height: 320px;
@@ -196,6 +197,28 @@ button#reset {
 :root[data-theme="light"] .preview-stage {
   background: #ffffff;
   border-color: #d1d5db;
+}
+
+.download-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  height: 34px;
+  width: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 700;
+  line-height: 1;
+  user-select: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+.download-btn:hover {
+  filter: brightness(1.05);
 }
 
 #card-preview {

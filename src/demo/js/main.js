@@ -8,6 +8,7 @@
   const resetBtn = document.getElementById('reset');
   const htmlCode = document.getElementById('html-code');
   const themeModeBtn = document.getElementById('theme-mode');
+  const downloadBtn = document.getElementById('download-card');
 
   const paramsToUrl = (url, layout, theme) => {
     const base = '/';
@@ -105,6 +106,31 @@
 
   // Default to dark mode
   setThemeMode('dark');
+
+  // Download current SVG with the theme name
+  const downloadCurrent = async () => {
+    try {
+      const url = previewImg.src;
+      const theme = (themeSelect.value || 'card') + '.svg';
+
+      const resp = await fetch(url, { credentials: 'same-origin' });
+      const blob = await resp.blob();
+
+      const objectUrl = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = objectUrl;
+      a.download = theme;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(objectUrl);
+    } catch (e) {
+      // no-op; we keep UI minimal
+      console.error('Download failed', e);
+    }
+  };
+
+  downloadBtn.addEventListener('click', downloadCurrent);
 
   initFromQuery();
 })();
