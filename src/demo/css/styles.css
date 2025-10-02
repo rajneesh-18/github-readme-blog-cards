@@ -387,7 +387,7 @@ button#add-theme-btn {
 
 .copy-btn {
   position: absolute;
-  top: 12px;
+  top: 1.5rem;
   right: 12px;
   padding: 6px 10px;
   border-radius: 8px;
