@@ -193,9 +193,11 @@
       'https://medium.com/@RitikaAgrawal08/exploring-css-flexbox-getting-started-with-the-basics-1174eea3ad4e';
     layoutSelect.value = 'vertical';
     themeSelect.value = 'default';
-    themePreviewMode = false; // reset back to HTML mode
-    render();
-  });
+
+    // also reset the add-new-theme form colors and name
+    resetThemeForm();
+
+    themePreviewMode = false;
 
   // Theme mode toggle
   const setThemeMode = (mode) => {
@@ -268,12 +270,44 @@
   const customThemes = loadCustomThemes();
   Object.keys(customThemes).forEach(addThemeOption);
 
+  // Reset helper for new theme form colors and name
+  const resetThemeForm = () => {
+    const defaults = {
+      bg: '#FDFDFF',
+      stroke: '#E4E2E2',
+      title: '#121212',
+      desc: '#555555',
+      tagBg: '#F2F0EF',
+      tagTitle: '#333333',
+    };
+
+    const pairs = [
+      { text: 'bg-color-text', color: 'bg-color', value: defaults.bg },
+      { text: 'stroke-color-text', color: 'stroke-color', value: defaults.stroke },
+      { text: 'title-color-text', color: 'title-color', value: defaults.title },
+      { text: 'desc-color-text', color: 'desc-color', value: defaults.desc },
+      { text: 'tag-bg-color-text', color: 'tag-bg-color', value: defaults.tagBg },
+      { text: 'tag-title-color-text', color: 'tag-title-color', value: defaults.tagTitle },
+    ];
+
+    pairs.forEach(({ text, color, value }) => {
+      const t = document.getElementById(text);
+      const c = document.getElementById(color);
+      if (t) t.value = value;
+      if (c) c.value = value;
+    });
+
+    // clear name + any validation errors
+    if (newThemeName) newThemeName.value = '';
+    clearThemeNameError();
+  };
+
   // Cancel create
   cancelCreateBtn.addEventListener('click', () => {
     newThemeForm.classList.add('hidden');
     newThemeForm.setAttribute('aria-hidden', 'true');
-    // empty the new theme input field
-    if (newThemeName) newThemeName.value = '';
+    // reset theme form (name + colors)
+    resetThemeForm();
     // restore HTML code section
     themePreviewMode = false;
     render();
