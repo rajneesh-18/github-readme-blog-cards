@@ -40,6 +40,14 @@
 
 <br/>
 
+## ⚙ Demo Site
+
+Here you can customize your blog card with a live preview.
+
+<https://github-readme-blog-cards.onrender.com/demo>
+
+<br/>
+
 ## 🔧 Options
 
 The `url` field is **required**. All other fields are _optional_.
@@ -82,8 +90,6 @@ To use a **theme**, append `&theme=` followed by a theme value available at the 
 </a>
 ```
 
-You can try themes and layouts in the live demo at `/demo`. The demo also includes an “Add new theme” UI for experimenting with custom color sets (stored locally in the browser). Note: server rendering currently supports only built-in themes listed below.
-
 <br/>
 
 |           Theme           |                                                                  Preview                                                                  |
@@ -96,7 +102,7 @@ You can try themes and layouts in the live demo at `/demo`. The demo also includ
 |         `copper`          |  <br/> <img src="https://res.cloudinary.com/djix6uusx/image/upload/v1754742314/blog-card-copper_csmue1.png" width='250' height='300' />   |
 |          `dark`           |    <br/> <img src="https://res.cloudinary.com/djix6uusx/image/upload/v1754740660/blog-card-dark_ovjasp.png" width='250' height='300'/>    |
 |         `carbon`          |  <br/> <img src="https://res.cloudinary.com/djix6uusx/image/upload/v1754741699/blog-card-carbon_hd2jg7.png" width='250' height='300' />   |
-|         `dracula`         |  <br/> <img src="https://res.cloudinary.com/djix6uusx/image/upload/v1754741818/blog-card-dracula_jkc2vs.png" width='250' height='300' />  |
+|         `dracula`         |  <br/> <img src="images/themes/dracula.svg" width='240' height='300' />  |
 
 <br/>
 
