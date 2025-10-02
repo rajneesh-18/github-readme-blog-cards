@@ -197,19 +197,25 @@
     // also reset the add-new-theme form colors and name
     resetThemeForm();
 
-    themePreviewMode = false;
+    themePreviewMode = false; // reset back to HTML mode
+    render();
+  });
 
   // Theme mode toggle
   const setThemeMode = (mode) => {
     document.documentElement.setAttribute('data-theme', mode);
-    themeModeBtn.textContent = mode === 'light' ? 'Dark mode' : 'Light mode';
+    if (themeModeBtn) {
+      themeModeBtn.textContent = mode === 'light' ? 'Dark mode' : 'Light mode';
+    }
   };
 
-  themeModeBtn.addEventListener('click', () => {
-    const current = document.documentElement.getAttribute('data-theme') || 'dark';
-    const next = current === 'dark' ? 'light' : 'dark';
-    setThemeMode(next);
-  });
+  if (themeModeBtn) {
+    themeModeBtn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      setThemeMode(next);
+    });
+  }
 
   // Default to dark mode
   setThemeMode('dark');
@@ -236,13 +242,17 @@
     }
   };
 
-  downloadBtn.addEventListener('click', downloadCurrent);
+  if (downloadBtn) {
+    downloadBtn.addEventListener('click', downloadCurrent);
+  }
 
   // Add new theme: open form (no toggle)
-  addThemeBtn.addEventListener('click', () => {
-    newThemeForm.classList.remove('hidden');
-    newThemeForm.setAttribute('aria-hidden', 'false');
-  });
+  if (addThemeBtn && newThemeForm) {
+    addThemeBtn.addEventListener('click', () => {
+      newThemeForm.classList.remove('hidden');
+      newThemeForm.setAttribute('aria-hidden', 'false');
+    });
+  }
 
   // Persist custom themes locally
   const loadCustomThemes = () => {
@@ -303,15 +313,21 @@
   };
 
   // Cancel create
-  cancelCreateBtn.addEventListener('click', () => {
-    newThemeForm.classList.add('hidden');
-    newThemeForm.setAttribute('aria-hidden', 'true');
-    // reset theme form (name + colors)
-    resetThemeForm();
-    // restore HTML code section
-    themePreviewMode = false;
-    render();
-  });
+  if (cancelCreateBtn && newThemeForm) {
+    cancelCreateBtn.addEventListener('click', () => {
+      newThemeForm.classList.add('hidden');
+      newThemeForm.setAttribute('aria-hidden', 'true');
+      // empty the new theme input field
+      if (newThemeName) newThemeName.value = '';
+      // restore HTML code section
+      themePreviewMode = false;
+      // reset theme form (name + colors)
+      if (typeof resetThemeForm === 'function') {
+        resetThemeForm();
+      }
+      render();
+    });
+  }
 
   // Validation helpers for theme name
   const showThemeNameError = (msg) => {
