@@ -126,6 +126,15 @@ label .req {
   font-weight: 700;
 }
 
+/* inline validation styles */
+.input-error {
+  border-color: #ef4444 !important;
+}
+.error-text {
+  color: #ef4444;
+  font-size: 12px;
+}
+
 .inline-group {
   display: flex;
   gap: 10px;

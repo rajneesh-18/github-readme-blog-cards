@@ -218,7 +218,46 @@
     return code;
   };
 
+  // Helper to show/hide validation error for theme name
+  const showThemeNameError = (msg) => {
+    if (!newThemeName) return;
+    newThemeName.classList.add('input-error');
+    const row = newThemeName.closest('.form-row');
+    if (row) {
+      let hint = row.querySelector('.error-text');
+      if (!hint) {
+        hint = document.createElement('small');
+        hint.className = 'error-text';
+        row.appendChild(hint);
+      }
+      hint.textContent = msg;
+    }
+  };
+  const clearThemeNameError = () => {
+    if (!newThemeName) return;
+    newThemeName.classList.remove('input-error');
+    const row = newThemeName.closest('.form-row');
+    if (row) {
+      const hint = row.querySelector('.error-text');
+      if (hint) hint.remove();
+    }
+  };
+  if (newThemeName) {
+    newThemeName.addEventListener('input', () => {
+      if (newThemeName.value && newThemeName.classList.contains('input-error')) {
+        clearThemeNameError();
+      }
+    });
+  }
+
   previewThemeBtn.addEventListener('click', () => {
+    // validate theme name required
+    const nameRaw = (newThemeName && newThemeName.value ? newThemeName.value : '').trim();
+    if (!nameRaw) {
+      showThemeNameError('name is required. lower case single word, if multiple separate by -');
+      return;
+    }
+
     if (htmlLabel && htmlCode) {
       htmlLabel.textContent = 'Theme code';
       htmlCode.value = buildThemeCodeSnippet();
