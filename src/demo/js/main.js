@@ -6,8 +6,9 @@
   const previewImg = document.getElementById('card-preview');
   const previewSize = document.getElementById('preview-size');
   const resetBtn = document.getElementById('reset');
+  const codeSection = document.querySelector('.preview-url');
   const htmlCode = document.getElementById('html-code');
-  const htmlLabel = document.querySelector('.preview-url label');
+  const htmlLabel = codeSection ? codeSection.querySelector('label') : null;
   const themeModeBtn = document.getElementById('theme-mode');
   const downloadBtn = document.getElementById('download-card');
 
@@ -51,6 +52,33 @@
 </a>`;
   };
 
+  // Code section helpers
+  const showHtmlCode = (snippet) => {
+    themePreviewMode = false;
+    if (!codeSection || !htmlLabel || !htmlCode) return;
+    htmlLabel.textContent = 'HTML Code';
+    htmlCode.style.display = 'block';
+    // remove any previous theme code block
+    const existing = codeSection.querySelector('#theme-code-block');
+    if (existing) existing.remove();
+    htmlCode.value = snippet;
+  };
+
+  const showThemeCode = (code) => {
+    themePreviewMode = true;
+    if (!codeSection || !htmlLabel) return;
+    htmlLabel.textContent = 'Theme code';
+    if (htmlCode) htmlCode.style.display = 'none';
+    let pre = codeSection.querySelector('#theme-code-block');
+    if (!pre) {
+      pre = document.createElement('pre');
+      pre.id = 'theme-code-block';
+      pre.className = 'code-block';
+      codeSection.appendChild(pre);
+    }
+    pre.textContent = code;
+  };
+
   const render = () => {
     const url = urlInput.value.trim();
     const layout = layoutSelect.value;
@@ -62,8 +90,7 @@
     previewImg.src = previewSrc;
 
     if (!themePreviewMode && htmlCode && htmlLabel) {
-      htmlLabel.textContent = 'HTML Code';
-      htmlCode.value = buildHtmlSnippet(url, layout, theme);
+      showHtmlCode(buildHtmlSnippet(url, layout, theme));
     }
   };
 
@@ -151,7 +178,7 @@
 
   downloadBtn.addEventListener('click', downloadCurrent);
 
-  // Add new theme: always open form (no toggle)
+  // Add new theme: open form (no toggle)
   addThemeBtn.addEventListener('click', () => {
     newThemeForm.classList.remove('hidden');
     newThemeForm.setAttribute('aria-hidden', 'false');
@@ -194,31 +221,7 @@
     render();
   });
 
-  // Preview custom theme code
-  const getTextValue = (id) => {
-    const el = document.getElementById(id);
-    return el ? el.value : '';
-  };
-
-  const buildThemeCodeSnippet = () => {
-    const nameRaw = (newThemeName.value || '').trim();
-    if (!nameRaw) return '';
-
-    const key = nameRaw.toLowerCase().replace(/\s+/g, '-');
-
-    const code =
-`'${key}' => [
-        'background' => '${getTextValue('bg-color-text') || '#FFFFFF'}',
-        'stroke' => '${getTextValue('stroke-color-text') || '#000000'}',
-        'title' => '${getTextValue('title-color-text') || '#000000'}',
-        'description' => '${getTextValue('desc-color-text') || '#000000'}',
-        'tagBackground' => '${getTextValue('tag-bg-color-text') || '#FFFFFF'}',
-        'tagTitle' => '${getTextValue('tag-title-color-text') || '#000000'}',
-    ],`;
-    return code;
-  };
-
-  // Helper to show/hide validation error for theme name
+  // Validation helpers for theme name
   const showThemeNameError = (msg) => {
     if (!newThemeName) return;
     newThemeName.classList.add('input-error');
@@ -250,19 +253,36 @@
     });
   }
 
+  const getTextValue = (id) => {
+    const el = document.getElementById(id);
+    return el ? el.value : '';
+  };
+
+  const buildThemeCodeSnippet = () => {
+    const nameRaw = (newThemeName.value || '').trim();
+    if (!nameRaw) return '';
+    const key = nameRaw.toLowerCase().replace(/\s+/g, '-');
+
+    return `'${key}' => [
+        'background' => '${getTextValue('bg-color-text') || '#FFFFFF'}',
+        'stroke' => '${getTextValue('stroke-color-text') || '#000000'}',
+        'title' => '${getTextValue('title-color-text') || '#000000'}',
+        'description' => '${getTextValue('desc-color-text') || '#000000'}',
+        'tagBackground' => '${getTextValue('tag-bg-color-text') || '#FFFFFF'}',
+        'tagTitle' => '${getTextValue('tag-title-color-text') || '#000000'}',
+    ],`;
+  };
+
+  // Preview custom theme code into a <pre> block (and hide textarea)
   previewThemeBtn.addEventListener('click', () => {
-    // validate theme name required
     const nameRaw = (newThemeName && newThemeName.value ? newThemeName.value : '').trim();
     if (!nameRaw) {
       showThemeNameError('name is required. lower case single word, if multiple separate by -');
       return;
     }
-
-    if (htmlLabel && htmlCode) {
-      htmlLabel.textContent = 'Theme code';
-      htmlCode.value = buildThemeCodeSnippet();
-      themePreviewMode = true;
-    }
+    clearThemeNameError();
+    const code = buildThemeCodeSnippet();
+    showThemeCode(code);
   });
 
   initFromQuery();
