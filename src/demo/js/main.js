@@ -6,7 +6,9 @@
   const previewImg = document.getElementById('card-preview');
   const previewSize = document.getElementById('preview-size');
   const resetBtn = document.getElementById('reset');
-  const htmlCode = document.getElementById('html-code');
+  // Code section container (we'll swap its content)
+  const codeContainer = document.querySelector('.preview-url');
+  let savedCodeSection = codeContainer ? codeContainer.innerHTML : '';
   const themeModeBtn = document.getElementById('theme-mode');
   const downloadBtn = document.getElementById('download-card');
 
@@ -23,8 +25,7 @@
   const cancelCreateBtn = document.getElementById('cancel-create');
   const previewThemeBtn = document.getElementById('preview-theme');
 
-  // For replacing HTML Code with Theme code when previewing custom theme
-  const htmlLabel = document.querySelector('.preview-url label');
+  // For replacing entire HTML Code component with Theme code
   let themePreviewMode = false;
 
   const paramsToUrl = (url, layout, theme) => {
@@ -52,6 +53,21 @@
 </a>`;
   };
 
+  const restoreHtmlCodeSection = () => {
+    if (!codeContainer) return;
+    codeContainer.innerHTML = savedCodeSection;
+  };
+
+  const setThemeCodeSection = (code) => {
+    if (!codeContainer) return;
+    codeContainer.innerHTML = `
+      <label>Theme code</label>
+      <pre class="code-block" id="theme-code"></pre>
+    `;
+    const pre = document.getElementById('theme-code');
+    if (pre) pre.textContent = code;
+  };
+
   const render = () => {
     const url = urlInput.value.trim();
     const layout = layoutSelect.value;
@@ -64,8 +80,11 @@
 
     // Update embeddable HTML code unless in theme preview mode
     if (!themePreviewMode) {
-      htmlLabel.textContent = 'HTML Code';
-      htmlCode.value = buildHtmlSnippet(url, layout, theme);
+      restoreHtmlCodeSection();
+      const htmlCode = document.getElementById('html-code');
+      const label = codeContainer.querySelector('label');
+      if (label) label.textContent = 'HTML Code';
+      if (htmlCode) htmlCode.value = buildHtmlSnippet(url, layout, theme);
     }
   };
 
@@ -157,7 +176,9 @@
   addThemeBtn.addEventListener('click', () => {
     const hidden = newThemeForm.classList.toggle('hidden');
     newThemeForm.setAttribute('aria-hidden', hidden ? 'true' : 'false');
-  });
+    if (hidden) {
+      // form closed -> restore HTML code section
+      themePreviewMode = false;
 
   // Persist custom themes locally
   const loadCustomThemes = () => {
@@ -189,6 +210,9 @@
   cancelCreateBtn.addEventListener('click', () => {
     newThemeForm.classList.add('hidden');
     newThemeForm.setAttribute('aria-hidden', 'true');
+    // restore HTML code section
+    themePreviewMode = false;
+    render();
   });
 
   // Preview custom theme code

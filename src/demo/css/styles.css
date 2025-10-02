@@ -349,6 +349,23 @@ button#reset {
   gap: 6px;
 }
 
+.code-block {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #0e1429;
+  color: var(--text);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 13px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow: auto;
+  min-height: 120px;
+}
+:root[data-theme="light"] .code-block {
+  background: #ffffff;
+}
+
 /* Footer */
 .demo-footer {
   padding: 20px;
