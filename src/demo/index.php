@@ -67,27 +67,45 @@ $defaultUrl = 'https://medium.com/@RitikaAgrawal08/exploring-css-flexbox-getting
                     <div class="color-grid">
                         <div>
                             <label for="bg-color">Background Color</label>
-                            <input type="color" id="bg-color" value="#FDFDFF">
+                            <div class="color-pair">
+                                <input type="text" id="bg-color-text" value="#FDFDFF" placeholder="#FFFFFF" pattern="^#([A-Fa-f0-9]{6})$" oninput="if(/^#([A-Fa-f0-9]{6})$/.test(this.value)) document.getElementById('bg-color').value=this.value">
+                                <input type="color" id="bg-color" value="#FDFDFF" oninput="document.getElementById('bg-color-text').value=this.value">
+                            </div>
                         </div>
                         <div>
                             <label for="stroke-color">Stroke Color</label>
-                            <input type="color" id="stroke-color" value="#E4E2E2">
+                            <div class="color-pair">
+                                <input type="text" id="stroke-color-text" value="#E4E2E2" placeholder="#FFFFFF" pattern="^#([A-Fa-f0-9]{6})$" oninput="if(/^#([A-Fa-f0-9]{6})$/.test(this.value)) document.getElementById('stroke-color').value=this.value">
+                                <input type="color" id="stroke-color" value="#E4E2E2" oninput="document.getElementById('stroke-color-text').value=this.value">
+                            </div>
                         </div>
                         <div>
                             <label for="title-color">Title Color</label>
-                            <input type="color" id="title-color" value="#121212">
+                            <div class="color-pair">
+                                <input type="text" id="title-color-text" value="#121212" placeholder="#FFFFFF" pattern="^#([A-Fa-f0-9]{6})$" oninput="if(/^#([A-Fa-f0-9]{6})$/.test(this.value)) document.getElementById('title-color').value=this.value">
+                                <input type="color" id="title-color" value="#121212" oninput="document.getElementById('title-color-text').value=this.value">
+                            </div>
                         </div>
                         <div>
                             <label for="desc-color">Description Color</label>
-                            <input type="color" id="desc-color" value="#555555">
+                            <div class="color-pair">
+                                <input type="text" id="desc-color-text" value="#555555" placeholder="#FFFFFF" pattern="^#([A-Fa-f0-9]{6})$" oninput="if(/^#([A-Fa-f0-9]{6})$/.test(this.value)) document.getElementById('desc-color').value=this.value">
+                                <input type="color" id="desc-color" value="#555555" oninput="document.getElementById('desc-color-text').value=this.value">
+                            </div>
                         </div>
                         <div>
                             <label for="tag-bg-color">Tag Background Color</label>
-                            <input type="color" id="tag-bg-color" value="#F2F0EF">
+                            <div class="color-pair">
+                                <input type="text" id="tag-bg-color-text" value="#F2F0EF" placeholder="#FFFFFF" pattern="^#([A-Fa-f0-9]{6})$" oninput="if(/^#([A-Fa-f0-9]{6})$/.test(this.value)) document.getElementById('tag-bg-color').value=this.value">
+                                <input type="color" id="tag-bg-color" value="#F2F0EF" oninput="document.getElementById('tag-bg-color-text').value=this.value">
+                            </div>
                         </div>
                         <div>
                             <label for="tag-title-color">Tag Title Color</label>
-                            <input type="color" id="tag-title-color" value="#333333">
+                            <div class="color-pair">
+                                <input type="text" id="tag-title-color-text" value="#333333" placeholder="#FFFFFF" pattern="^#([A-Fa-f0-9]{6})$" oninput="if(/^#([A-Fa-f0-9]{6})$/.test(this.value)) document.getElementById('tag-title-color').value=this.value">
+                                <input type="color" id="tag-title-color" value="#333333" oninput="document.getElementById('tag-title-color-text').value=this.value">
+                            </div>
                         </div>
                     </div>
                     <div class="actions">

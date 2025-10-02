@@ -181,6 +181,21 @@ button#add-theme-btn{
   gap: 6px;
 }
 
+/* color input + text input pair */
+.color-pair {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.color-pair input[type="text"] {
+  flex: 1;
+}
+.color-pair input[type="color"] {
+  width: 48px;
+  min-width: 48px;
+  padding: 0;
+}
+
 /* style color input like url input */
 input[type="color"] {
   -webkit-appearance: none;
