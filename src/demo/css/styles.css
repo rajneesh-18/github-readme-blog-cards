@@ -27,7 +27,7 @@
 
 html,
 body {
-  height: 100%;
+  min-height: 100%;
 }
 
 body {
@@ -140,6 +140,7 @@ label .req {
   display: flex;
   gap: 10px;
   align-items: center;
+  flex-wrap: wrap; /* allow wrap on small screens */
 }
 
 .inline-group select {
@@ -200,14 +201,18 @@ button#add-theme-btn{
   margin-bottom: 2rem;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 1680px) {
   .color-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem; 
   }
 }
-.color-grid > div {
-  display: grid;
-  gap: 6px;
+
+@media (max-width: 640px) {
+  .color-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem; 
+  }
 }
 
 /* color input + text input pair */
@@ -315,7 +320,7 @@ button#apply,
 button#add-theme-btn {
   background: linear-gradient(180deg, #5460ff, #3b44c9);
   color: white;
-  order: 1px solid #5a64ff;
+  border: 1px solid #5a64ff;
 }
 
 /* Preview */
