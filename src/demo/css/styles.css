@@ -28,6 +28,7 @@
 html,
 body {
   min-height: 100%;
+  min-height: 100%;
 }
 
 body {
@@ -386,7 +387,7 @@ button#add-theme-btn {
 
 .copy-btn {
   position: absolute;
-  top: 1.5rem;
+  top: 12px;
   right: 12px;
   padding: 6px 10px;
   border-radius: 8px;
