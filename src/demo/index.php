@@ -91,7 +91,6 @@ $defaultUrl = 'https://medium.com/@RitikaAgrawal08/exploring-css-flexbox-getting
                         </div>
                     </div>
                     <div class="actions">
-                        <button type="button" id="create-theme">Create theme</button>
                         <button type="button" id="cancel-create" class="secondary">Cancel</button>
                     </div>
                 </div>

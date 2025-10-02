@@ -20,7 +20,6 @@
   const descColor = document.getElementById('desc-color');
   const tagBgColor = document.getElementById('tag-bg-color');
   const tagTitleColor = document.getElementById('tag-title-color');
-  const createThemeBtn = document.getElementById('create-theme');
   const cancelCreateBtn = document.getElementById('cancel-create');
 
   const paramsToUrl = (url, layout, theme) => {
@@ -175,33 +174,6 @@
   // Initialize dropdown with any existing custom themes
   const customThemes = loadCustomThemes();
   Object.keys(customThemes).forEach(addThemeOption);
-
-  // Create theme
-  createThemeBtn.addEventListener('click', () => {
-    const name = (newThemeName.value || '').trim();
-    if (!name) return;
-
-    const key = name.toLowerCase().replace(/\s+/g, '-');
-
-    customThemes[key] = {
-      background: bgColor.value,
-      stroke: strokeColor.value,
-      title: titleColor.value,
-      description: descColor.value,
-      tagBackground: tagBgColor.value,
-      tagTitle: tagTitleColor.value,
-    };
-    saveCustomThemes(customThemes);
-
-    addThemeOption(key);
-    themeSelect.value = key;
-
-    // collapse and reset minimal inputs
-    newThemeForm.classList.add('hidden');
-    newThemeForm.setAttribute('aria-hidden', 'true');
-
-    render();
-  });
 
   // Cancel create
   cancelCreateBtn.addEventListener('click', () => {
