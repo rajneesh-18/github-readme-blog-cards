@@ -61,6 +61,8 @@
     // remove any previous theme code UI
     const existingContainer = codeSection.querySelector('#theme-code-container');
     if (existingContainer) existingContainer.remove();
+    const existingInstructions = codeSection.querySelector('.code-instructions');
+    if (existingInstructions) existingInstructions.remove();
     htmlCode.value = snippet;
   };
 
@@ -92,9 +94,11 @@
     htmlLabel.textContent = 'Theme code';
     if (htmlCode) htmlCode.style.display = 'none';
 
-    // remove previous container if any
+    // remove previous container or instructions if any (prevent duplicates)
     const prev = codeSection.querySelector('#theme-code-container');
     if (prev) prev.remove();
+    const prevInstructions = codeSection.querySelector('.code-instructions');
+    if (prevInstructions) prevInstructions.remove();
 
     // container with copy button and pre
     const container = document.createElement('div');
