@@ -160,8 +160,6 @@ button {
   all: unset;
   background: linear-gradient(180deg, #5460ff, #3b44c9);
   color: white;
-  padding: 12px 20px; /* wider buttons */
-  min-width: 130px;   /* wider buttons */
   text-align: center;
   border-radius: 10px;
   font-weight: 600;
@@ -169,6 +167,12 @@ button {
   cursor: pointer;
   border: 1px solid #5a64ff;
 }
+
+button.wide {
+ padding: 12px 20px; /* wider buttons */
+  min-width: 130px;   /* wider buttons */
+}
+
 button#reset {
   background: linear-gradient(180deg, #00d37f, #10b981);
   border-color: #08c77d;
@@ -203,20 +207,19 @@ button#reset {
   position: absolute;
   top: 10px;
   right: 10px;
-  height: 34px;
-  width: 34px;
   display: grid;
   place-items: center;
-  border-radius: 8px;
+  padding: 8px 12px;
+  border-radius: 10px;
   border: 1px solid var(--border);
   background: var(--panel);
   color: var(--text);
   cursor: pointer;
-  font-weight: 700;
   line-height: 1;
   user-select: none;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  font-size: 14px;
 }
+
 .download-btn:hover {
   filter: brightness(1.05);
 }

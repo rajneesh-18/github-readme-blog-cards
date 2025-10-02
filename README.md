@@ -91,10 +91,10 @@ To use a **theme**, append `&theme=` followed by a theme value available at the 
 |       `light-gray`        | <br/> <img src="https://res.cloudinary.com/djix6uusx/image/upload/v1754740352/blog-card-light-gray_pk0bsm.png" width='250' height='300'/> |
 |         `pastel`          |  <br/> <img src="https://res.cloudinary.com/djix6uusx/image/upload/v1754740826/blog-card-pastel_izphr2.png" width='250' height='300' />   |
 |          `mint`           |   <br/> <img src="https://res.cloudinary.com/djix6uusx/image/upload/v1754740745/blog-card-mint_o1i1ms.png" width='250' height='300' />    |
+|         `copper`          |  <br/> <img src="https://res.cloudinary.com/djix6uusx/image/upload/v1754742314/blog-card-copper_csmue1.png" width='250' height='300' />   |
 |          `dark`           |    <br/> <img src="https://res.cloudinary.com/djix6uusx/image/upload/v1754740660/blog-card-dark_ovjasp.png" width='250' height='300'/>    |
 |         `carbon`          |  <br/> <img src="https://res.cloudinary.com/djix6uusx/image/upload/v1754741699/blog-card-carbon_hd2jg7.png" width='250' height='300' />   |
 |         `dracula`         |  <br/> <img src="https://res.cloudinary.com/djix6uusx/image/upload/v1754741818/blog-card-dracula_jkc2vs.png" width='250' height='300' />  |
-|         `copper`          |  <br/> <img src="https://res.cloudinary.com/djix6uusx/image/upload/v1754742314/blog-card-copper_csmue1.png" width='250' height='300' />   |
 
 <br/>
 
