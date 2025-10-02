@@ -321,7 +321,7 @@ button#apply,
 button#add-theme-btn {
   background: linear-gradient(180deg, #5460ff, #3b44c9);
   color: white;
-  order: 1px solid #5a64ff;
+  border: 1px solid #5a64f;
 }
 
 /* Preview */
