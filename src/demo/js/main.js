@@ -151,10 +151,10 @@
 
   downloadBtn.addEventListener('click', downloadCurrent);
 
-  // Add new theme: toggle form
+  // Add new theme: always open form (no toggle)
   addThemeBtn.addEventListener('click', () => {
-    const hidden = newThemeForm.classList.toggle('hidden');
-    newThemeForm.setAttribute('aria-hidden', hidden ? 'true' : 'false');
+    newThemeForm.classList.remove('hidden');
+    newThemeForm.setAttribute('aria-hidden', 'false');
   });
 
   // Persist custom themes locally
@@ -187,6 +187,8 @@
   cancelCreateBtn.addEventListener('click', () => {
     newThemeForm.classList.add('hidden');
     newThemeForm.setAttribute('aria-hidden', 'true');
+    // empty the new theme input field
+    if (newThemeName) newThemeName.value = '';
     // restore HTML code section
     themePreviewMode = false;
     render();
