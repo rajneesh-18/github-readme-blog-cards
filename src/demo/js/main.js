@@ -125,9 +125,9 @@
     instructions.innerHTML = `
       <div class="instructions-title">Instructions</div>
       <ol>
-        <li>Copy the generated array code and add it at the last of the array in <code>themes_list.php</code> (<code>src/theme/themes_list.php</code>).</li>
-        <li>Download the image from the preview and add it to <code>images/themes</code> folder. Make sure the name matches the theme name.</li>
-        <li>Add your theme in the theme table in <code>README</code>.</li>
+        <li>Copy the generated array code and add it at the last of the array in <span class="file-chip">themes_list.php</span> (<span class="file-chip">src/theme/themes_list.php</span>).</li>
+        <li>Download the image from the preview and add it to <span class="file-chip">images/themes</span> folder. Make sure the name matches the theme name.</li>
+        <li>Add your theme in the theme table in <span class="file-chip">README</span>.</li>
       </ol>
     `;
 
