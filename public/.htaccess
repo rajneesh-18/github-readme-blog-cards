@@ -3,6 +3,12 @@ RewriteEngine On
 # Ignore favicon requests completely
 RewriteRule ^favicon\.ico$ - [L,R=404]
 
+# Explicit routes for the demo page and its assets
+RewriteRule ^demo$ demo.php [L]
+RewriteRule ^demo-css$ demo-css.php [L]
+RewriteRule ^demo-js$ demo-js.php [L]
+
+# Fallback: map any route to a matching PHP file if it exists
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ $1.php [L]
