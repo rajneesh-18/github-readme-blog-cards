@@ -146,6 +146,21 @@ label .req {
   cursor: pointer;
 }
 
+/* Light gradient style specifically for the Preview button */
+#preview-theme {
+  background: linear-gradient(180deg, #eef2ff, #e0e7ff);
+  color: #111827;
+  border-color: #c7d2fe;
+}
+:root[data-theme="light"] #preview-theme {
+  background: linear-gradient(180deg, #eef2ff, #e0e7ff);
+  color: #111827;
+  border-color: #c7d2fe;
+}
+#preview-theme:hover {
+  filter: brightness(1.02);
+}
+
 button#add-theme-btn{
   font-size: 14px;
 }
